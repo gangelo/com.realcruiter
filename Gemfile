@@ -12,8 +12,6 @@ gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer',  platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -27,20 +25,29 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
-
 # Twitter bootstrap support
 gem 'therubyracer'
 gem 'less-rails' # Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem 'twitter-bootstrap-rails'
+
+group :development, :test do
+  # Using RSpec and/or Capybara as opposed to MiniTest, fails to clean our database during testing.
+  gem 'database_cleaner', '~> 1.3.0'
+  gem 'rspec-rails', '~> 3.0.0'
+  gem 'rspec-activemodel-mocks', '~> 1.0.1'
+  gem 'webrat', '0.7.3'
+
+  # Use Factory Girl for Active Record sample instance object creation: https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md
+  gem 'factory_girl_rails', '~> 4.0'
+  # Use Shoulda Matchers for validation and association testing: https://github.com/thoughtbot/shoulda-matchers
+  gem 'shoulda-matchers'
+  # https://github.com/jnicklas/capybara  
+  gem 'capybara'
+  # For factory girl help.
+  gem 'ffaker', '~> 1.25.0'
+end
+
+group :development do
+  gem 'pry-rails'
+end
 
