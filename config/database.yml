@@ -13,8 +13,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: ealcruiter_test
+  database: realcruiter_test
 
 production:
   <<: *default
-  database: ealcruiter_prod
+  database: realcruiter_prod
