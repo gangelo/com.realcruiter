@@ -1,24 +1,35 @@
-$golden-ratio: 1.618;
+@import 'mixins';
+
 $base-font-size: 1.0em;
+$default-color: #333;
 
 body {
   margin: 8px;
+  color: $default-color;
 }
 
-.logo {
-  display: block;
+.realcruiter-com-large {
   font-size: ($base-font-size * 2) * $golden-ratio;
 
   .real {  
     font-weight: bold;
-    color: #ff9900;
+    color: #f90;
   }
 
   .cruiter {   
+    color: #000;
   }
 }
 
-.quote {
+/* Realcruiter.com */
+.realcruiter-com-normal {
+  @extend .realcruiter-com-large;
+
+  font-size: $base-font-size;
+}
+
+/* Realcruiter.com official quote */
+.realcruiter-quote {
   font-size: $base-font-size * $golden-ratio;
   font-style: italic;
 }
