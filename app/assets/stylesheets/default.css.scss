@@ -1,0 +1,24 @@
+$golden-ratio: 1.618;
+$base-font-size: 1.0em;
+
+body {
+  margin: 8px;
+}
+
+.logo {
+  display: block;
+  font-size: ($base-font-size * 2) * $golden-ratio;
+
+  .real {  
+    font-weight: bold;
+    color: #ff9900;
+  }
+
+  .cruiter {   
+  }
+}
+
+.quote {
+  font-size: $base-font-size * $golden-ratio;
+  font-style: italic;
+}
