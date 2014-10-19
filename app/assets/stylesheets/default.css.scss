@@ -8,12 +8,13 @@ body {
   color: $default-color;
 }
 
+/* Realcruiter.com large */
 .realcruiter-com-large {
   font-size: ($base-font-size * 2) * $golden-ratio;
 
   .real {  
     font-weight: bold;
-    color: #f90;
+    color: $default-orange;
   }
 
   .cruiter {   
@@ -21,7 +22,14 @@ body {
   }
 }
 
-/* Realcruiter.com */
+/* Realcruiter.com medium */
+.realcruiter-com-medium {
+  @extend .realcruiter-com-large;
+
+  font-size: ($base-font-size * 1.25) * $golden-ratio;
+}
+
+/* Realcruiter.com normal */
 .realcruiter-com-normal {
   @extend .realcruiter-com-large;
 
@@ -32,4 +40,34 @@ body {
 .realcruiter-quote {
   font-size: $base-font-size * $golden-ratio;
   font-style: italic;
+}
+
+/* 
+  Realcruiter
+  .community 
+*/
+.realcruiter-community {
+  font-size: ($base-font-size * 2) * $golden-ratio;
+
+  .realcruiter {
+    .real {  
+      font-weight: bold;
+      color: $default-orange;
+    }
+
+    .cruiter {   
+      color: #000;
+    }
+  }
+
+  .community {
+    .com {  
+      font-weight: bold;
+      color: $default-orange;
+    }
+
+    .munity {   
+      color: #000;
+    }
+  }
 }
