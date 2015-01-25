@@ -5,11 +5,44 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+
+  <style type='text/css'>
+    div.mw-inline-left {
+      display:inline-block;
+      float:left;
+    }
+
+    div.mw-inline-right {
+      display:inline-block;
+      float:right;
+    }
+
+    div.mw-sm-pad-right {
+      padding-right: 8px;
+    }
+  </style>
 </head>
 <body>
 
-<span class='realcruiter-quote'>&quot;Your career, your way&quot;</span>
-<%= render partial: 'shared/realcruiter_com_logo' %>
+<div class='clearfix'>
+  <div class='mw-inline-left' style='width:50%'>
+    <span class='realcruiter-quote'>&quot;Your career, your way&quot;</span>
+    <%= render partial: 'shared/realcruiter_com_logo' %>
+  </div>
+  <div class='mw-inline-left' style='width:50%'>
+    <%= form_tag root_path do %>
+      <div class="field mw-inline-left mw-sm-pad-right">
+        <%= text_field_tag :email, params[:email], placeholder: "Email or username" %>
+      </div>
+      <div class="field mw-inline-left mw-sm-pad-right">
+        <%= text_field_tag :password, params[:password], type: "password", placeholder: "Password" %>
+      </div>
+      <div class="actions mw-inline-left">
+        <%= submit_tag "Log In", class: "btn btn-xs btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
 
 <%= yield %>
 
