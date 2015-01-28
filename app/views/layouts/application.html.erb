@@ -5,42 +5,37 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-
-  <style type='text/css'>
-    div.mw-inline-left {
-      display:inline-block;
-      float:left;
-    }
-
-    div.mw-inline-right {
-      display:inline-block;
-      float:right;
-    }
-
-    div.mw-sm-pad-right {
-      padding-right: 8px;
-    }
-  </style>
 </head>
 <body>
 
 <div class='clearfix'>
-  <div class='mw-inline-left' style='width:50%'>
+  <div style='display:inline-block; float:left; width:auto'>
     <span class='realcruiter-quote'>&quot;Your career, your way&quot;</span>
     <%= render partial: 'shared/realcruiter_com_logo' %>
   </div>
-  <div class='mw-inline-left' style='width:50%'>
-    <%= form_tag root_path do %>
-      <div class="field mw-inline-left mw-sm-pad-right">
-        <%= text_field_tag :email, params[:email], placeholder: "Email or username" %>
-      </div>
-      <div class="field mw-inline-left mw-sm-pad-right">
-        <%= text_field_tag :password, params[:password], type: "password", placeholder: "Password" %>
-      </div>
-      <div class="actions mw-inline-left">
-        <%= submit_tag "Log In", class: "btn btn-xs btn-primary" %>
-      </div>
-    <% end %>
+  <div style='width:auto;'>
+    <div class=''>
+      <%= form_tag root_path, class: 'form-inline' do %>
+        <div class='form-group' style=''>
+          <%= text_field_tag :email, params[:email], class: 'form-control', placeholder: 'Email or username' %>
+
+          <%= label_tag :keep_signed_in, class: 'checkbox', style: '' do %>
+            <%= check_box_tag :keep_signed_in, params[:keep_signed_in], false, class: '' %>
+            Keep me logged in
+          <% end %>
+        </div>
+        <div class='form-group' style=''>
+          <%= text_field_tag :password, params[:password], type: 'password', class: 'form-control', placeholder: 'Password' %>
+
+          <%= link_to '#', class: 'underline' do %>
+             You forget something?
+          <% end %>
+        </div>
+        <div class='actions form-group' style=''>
+          <%= submit_tag 'Log In', class: 'btn btn-sm btn-default special-button' %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
 

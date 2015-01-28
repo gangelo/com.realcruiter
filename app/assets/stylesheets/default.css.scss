@@ -71,3 +71,11 @@ body {
     }
   }
 }
+
+a.underline {
+  text-decoration: underline;
+}
+
+input.special-button {
+  background-color: $default-orange;
+}
