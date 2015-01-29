@@ -8,38 +8,20 @@
 </head>
 <body>
 
-<div class='clearfix'>
+<div class='header clearfix'>
   <div style='display:inline-block; float:left; width:auto'>
     <span class='realcruiter-quote'>&quot;Your career, your way&quot;</span>
     <%= render partial: 'shared/realcruiter_com_logo' %>
   </div>
-  <div style='width:auto;'>
-    <div class=''>
-      <%= form_tag root_path, class: 'form-inline' do %>
-        <div class='form-group' style=''>
-          <%= text_field_tag :email, params[:email], class: 'form-control', placeholder: 'Email or username' %>
-
-          <%= label_tag :keep_signed_in, class: 'checkbox', style: '' do %>
-            <%= check_box_tag :keep_signed_in, params[:keep_signed_in], false, class: '' %>
-            Keep me logged in
-          <% end %>
-        </div>
-        <div class='form-group' style=''>
-          <%= text_field_tag :password, params[:password], type: 'password', class: 'form-control', placeholder: 'Password' %>
-
-          <%= link_to '#', class: 'underline' do %>
-             You forget something?
-          <% end %>
-        </div>
-        <div class='actions form-group' style=''>
-          <%= submit_tag 'Log In', class: 'btn btn-sm btn-default special-button' %>
-        </div>
-      <% end %>
-    </div>
-  </div>
+  <% if content_for? :right_header %>
+    <%= yield :right_header %>
+  <% end %>
+</div>
+  
+<div class='body'>
+  <%= yield %>
 </div>
 
-<%= yield %>
 
 </body>
 </html>

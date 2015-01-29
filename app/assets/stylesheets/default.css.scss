@@ -76,6 +76,11 @@ a.underline {
   text-decoration: underline;
 }
 
+/* When you want a Realcruiter.com "orange" button */
 input.special-button {
   background-color: $default-orange;
+}
+
+.terms-agreements {
+  color: #999 !important;
 }
