@@ -48,6 +48,9 @@
             I'm a <i>Recruiter</i>
           <% end %>
         </div>
+         <div class='form-group'>
+          <%= text_field_tag :referral_code, params[:referral_Code], class: 'form-control', placeholder: 'Enter referral code' %>
+        </div>
         <div class='form-group'>
           <span class='terms-agreements small'>By clicking Sign Up, you agree to out Terms and that you have read our Data Usage Policy, including our Cookie Use.</span>
         </div>
@@ -66,3 +69,19 @@
     </div>
   </div>
 </div>
+
+<script type='text/javascript'>
+  $(function () {
+    if ($('#user_type_technical_rectuiter').is(':checked')) {
+      $('#referral_code').show();
+    } else {
+      $('#referral_code').hide();
+    }
+
+    $('input[name=user_type]:radio').change(function () {
+      $('#referral_code').toggle(250);
+      $('#referral_code').val('');
+    });
+  });
+</script>
+
