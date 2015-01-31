@@ -54,3 +54,9 @@ group :development do
   gem 'pry-rails'
 end
 
+# This code says that if the app is being deployed in the production environment,
+# it should add the 'rails_12_factor' gem (which optimimizes Rails for Heroku) to the Gemset.
+group :production do
+  gem 'rails_12factor'
+end
+
