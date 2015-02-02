@@ -8,23 +8,24 @@
 </head>
 <body>
 
-<div class='header clearfix'>
-  <div style='display:inline-block; float:left; width:auto'>
-    <span class='realcruiter-quote'>&quot;Your career, your way&quot;</span>
-    <%= render partial: 'shared/realcruiter_com_logo' %>
+<div class='page-container'>
+  <div class='header container'>
+    <div style='display:inline-block; float:left; width:auto'>
+      <span class='realcruiter-quote'>&quot;Your career, your way&quot;</span>
+      <%= render partial: 'shared/realcruiter_com_logo' %>
+    </div>
+    <% if content_for? :right_header %>
+      <%= yield :right_header %>
+    <% end %>
   </div>
-  <% if content_for? :right_header %>
-    <%= yield :right_header %>
-  <% end %>
-</div>
-  
-<div class='body'>
+
   <p class='notice'><%= notice %></p>
   <p class='alert'><%= alert %></p>
-
-  <%= yield %>
+    
+  <div class='container body'>
+    <%= yield %>
+  </div>
 </div>
-
 
 </body>
 </html>
