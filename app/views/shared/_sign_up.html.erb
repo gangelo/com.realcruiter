@@ -1,0 +1,18 @@
+<%= form_for resource, :url => user_registration_path,
+                       :builder => InlineErrorsBuilder,
+                       :method => :POST,
+                       :role => :form do |f| %>
+  <%= content_tag :div, :class => f.validation_class(:email, "form-group") do %>
+    <%= f.text_field :email, :placeholder => "Email", :class => 'form-control' %>
+    <%= f.errors_for :email %>
+  <% end %>
+
+  <%= content_tag :div, :class => f.validation_class(:password, "form-group") do %>
+    <%= f.password_field :password, :placeholder => "Password", :class => 'form-control' %>
+    <%= f.errors_for :password %>
+  <% end %>
+
+  <%= content_tag :div, class: "form-group tall" do %>  
+    <%= f.submit 'Sign up', class: 'btn btn-sm btn-warning _pull-right special-button form-control' , style: 'width:100%' %>
+  <% end %>
+<% end %>

@@ -1,7 +1,7 @@
 
 
 <% content_for :right_header do %>
-  <div class='clearfix container-fluid pull-right form-inline'>
+  <div class='clearfix _container-fluid pull-right form-inline'>
     <%= form_tag root_path do %>
       <div class='row'>
         <div class='col-md-4'>
@@ -20,7 +20,7 @@
 
       <div class='row'>
         <div class='col-md-4'>
-          <%= label_tag :keep_signed_in, class: '_checkbox nowrap' do %>
+          <%= label_tag :keep_signed_in, class: 'checkbox nowrap' do %>
             <%= check_box_tag :keep_signed_in, params[:keep_signed_in], false %>
             Keep me logged in
           <% end %>
@@ -37,8 +37,19 @@
 <% end %>
 
 
-<div class='container-fluid' style='padding-left:50px;'>
-  <div class='row'>
+<div style='padding-left:50px;'>
+  <div class="row">
+    <div class="col-md-4 panel panel-default">
+      <div class="pull-left">
+        <h4>Are you new? <span>Sign up</span></h4>
+      </div>
+      <div class="clearfix"></div>
+      <hr />
+      <%= render :partial => 'shared/sign_up' %>
+    </div>
+<%
+=begin
+%>
     <div class='col-md-4'>
       <h1><small>Sign Up</small></h1>
       <%= form_tag root_path do %>
@@ -70,6 +81,9 @@
         </div>
       <% end %>
     </div>
+<%
+=end
+%>
     <div class='col-md-8'>
       <div class="jumbotron">
         <h1>You need the</h1>
