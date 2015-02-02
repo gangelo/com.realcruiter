@@ -60,3 +60,6 @@ group :production do
   gem 'rails_12factor'
 end
 
+# Used to set up our rails app configuration on heroku using ENV.
+gem 'figaro', '~> 1.1.0'
+
