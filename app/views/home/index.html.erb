@@ -1,4 +1,6 @@
-
+<% content_for :head do %>
+  <%= javascript_include_tag 'signup', 'data-turbolinks-track' => true %>
+<% end %>
 
 <% content_for :right_header do %>
   <div class='clearfix _container-fluid pull-right form-inline'>
@@ -94,19 +96,4 @@
     </div>
   </div>
 </div>
-
-<script type='text/javascript'>
-  $(function () {
-    if ($('#user_type_technical_rectuiter').is(':checked')) {
-      $('#referral_code').show();
-    } else {
-      $('#referral_code').hide();
-    }
-
-    $('input[name=user_type]:radio').change(function () {
-      $('#referral_code').toggle(250);
-      $('#referral_code').val('');
-    });
-  });
-</script>
 
