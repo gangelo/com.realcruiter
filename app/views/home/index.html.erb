@@ -49,43 +49,7 @@
       <hr />
       <%= render :partial => 'shared/sign_up' %>
     </div>
-<%
-=begin
-%>
-    <div class='col-md-4'>
-      <h1><small>Sign Up</small></h1>
-      <%= form_tag root_path do %>
-        <div class='form-group'>
-          <%= text_field_tag :email, params[:email], class: 'form-control', placeholder: 'Enter your email' %>
-          <%= text_field_tag :email_confirm, params[:email_confirm], class: 'form-control', placeholder: 'Re-enter your email' %>
-        </div>
-        <div class='form-group'>
-          <%= text_field_tag :password, params[:password], type: 'password', class: 'form-control', placeholder: 'New password' %>
-        </div>
-         <div class='form-inline form-group' style='margin-bottom:0 !important'>
-           <%= label_tag :technical_rectuiter, class: 'radiobutton' do %>
-            <%= radio_button_tag :user_type, :software_developer, false, class: '_form-control', style: 'inline' %>
-            I'm a <i>Developer</i>
-          <% end %>
-          <%= label_tag :technical_rectuiter, class: 'radiobutton' do %>
-            <%= radio_button_tag :user_type, :technical_rectuiter, true, style: 'inline' %>
-            I'm a <i>Recruiter</i>
-          <% end %>
-        </div>
-         <div class='form-group'>
-          <%= text_field_tag :referral_code, params[:referral_Code], class: 'form-control', placeholder: 'Enter referral code' %>
-        </div>
-        <div class='form-group'>
-          <span class='terms-agreements small'>By clicking Sign Up, you agree to out Terms and that you have read our Data Usage Policy, including our Cookie Use.</span>
-        </div>
-        <div class='actions form-group'>
-          <%= submit_tag 'Sign up', class: 'btn btn-sm btn-default special-button', style: 'width:100%' %>
-        </div>
-      <% end %>
-    </div>
-<%
-=end
-%>
+
     <div class='col-md-8'>
       <div class="jumbotron">
         <h1>You need the</h1>
