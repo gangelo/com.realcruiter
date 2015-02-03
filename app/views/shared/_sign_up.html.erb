@@ -3,25 +3,41 @@
                        :method => :POST,
                        :role => :form do |f| %>
   <%= content_tag :div, :class => f.validation_class(:email, "form-group") do %>
-    <%= f.text_field :email, :placeholder => "Email", :class => 'form-control' %>
+    <%= f.text_field :email, placeholder: "Email", class: 'form-control' %>
     <%= f.errors_for :email %>
   <% end %>
 
   <%= content_tag :div, :class => f.validation_class(:password, "form-group") do %>
-    <%= f.password_field :password, :placeholder => "Password", :class => 'form-control' %>
+    <%= f.password_field :password, placeholder: "Password", class: 'form-control', autocomplete: :off %>
     <%= f.errors_for :password %>
   <% end %>
 
+  <%= content_tag :div, :class => f.validation_class(:password, "form-group") do %>
+    <%= f.password_field :password_confirm, :placeholder => "Re-enter password", :class => 'form-control', autocomplete: :off %>
+    <%= f.errors_for :password_confirmation %>
+  <% end %>
+
   <%= content_tag :div, :class => f.validation_class(:user_type, 'form-group') do %>
-    <%= f.radio_button :user_type, 'software_developer', checked: false, class: 'inline' %>
+    <%= f.radio_button :user_type, 'software_developer', checked: false, class: 'inline', disabled: 'disabled' %>
     <%= label :software_developer, 'I am a Developer' %>
-    <%= f.radio_button :user_type, 'technical_rectuiter', checked: true, class: 'inline' %>
+    <%= f.radio_button :user_type, 'technical_rectuiter', checked: true, class: 'inline', disabled: 'disabled' %>
     <%= label :technical_rectuiter, 'I am a Recruiter' %>
   <% end %>
+
+<%
+=begin
+%>
+  <%= content_tag :div, :class => f.validation_class(:referral_code, 'form-group') do %>
+    <%= f.text_field :referral_code, placeholder: 'Enter referral code', class: 'form-control', disabled: 'disabled' %>
+  <% end %>
+<%
+=end
+%>
 
   <div class='form-group'>
     <%= text_field_tag :referral_code, params[:referral_Code], class: 'form-control', placeholder: 'Enter referral code' %>
   </div>
+
   <div class='form-group'>
     <span class='terms-agreements small'>By clicking Sign Up, you agree to out Terms and that you have read our Data Usage Policy, including our Cookie Use.</span>
   </div>

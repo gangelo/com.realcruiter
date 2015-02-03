@@ -3,19 +3,19 @@
 <% end %>
 
 <% content_for :right_header do %>
-  <div class='clearfix _container-fluid pull-right form-inline'>
+  <div class='clearfix pull-right form-inline'>
     <%= form_tag root_path do %>
       <div class='row'>
         <div class='col-md-4'>
-          <%= text_field_tag :email, params[:email], class: '_form-control', placeholder: 'Email or username' %>
+          <%= text_field_tag :email, params[:email], class: 'form-control', placeholder: 'Email or username' %>
         </div>
 
         <div class='col-md-4'>
-          <%= text_field_tag :password, params[:password], type: 'password', class: '_form-control', placeholder: 'Password' %>
+          <%= text_field_tag :password, params[:password], type: 'password', class: 'form-control', placeholder: 'Password' %>
         </div>  
 
         <div class='col-md-4 actions'>
-          <%= submit_tag 'Log In', class: 'btn btn-sm btn-default special-button' %>
+          <%= submit_tag 'Log In', class: 'btn _btn-sm btn-default special-button' %>
         </div>
       </div>
 
@@ -43,7 +43,7 @@
   <div class="row">
     <div class="col-md-4 panel panel-default">
       <div class="pull-left">
-        <h4>Are you new? <span>Sign up</span></h4>
+        <h4>Are you new? <span>Sign up!</span></h4>
       </div>
       <div class="clearfix"></div>
       <hr />
