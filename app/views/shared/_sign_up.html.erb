@@ -3,7 +3,7 @@
                        :method => :POST,
                        :role => :form do |f| %>
   <%= content_tag :div, :class => f.validation_class(:email, "form-group") do %>
-    <%= f.text_field :email, placeholder: "Email", class: 'form-control' %>
+    <%= f.email_field :email, placeholder: "Email", class: 'form-control', autocomplete: :off %>
     <%= f.errors_for :email %>
   <% end %>
 

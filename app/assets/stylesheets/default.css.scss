@@ -91,10 +91,10 @@ input.special-button {
 
 /* Alerts and notices */
 .alert-header {
-  font-size: ($base-font-size * 1) * $golden-ratio;
+  font-size: ($base-font-size * 0.825) * $golden-ratio;
   font-weight: bold;
 }
 
 .alert-message {
-  font-size: ($base-font-size * 1) * $golden-ratio;
+  font-size: ($base-font-size * 0.825) * $golden-ratio;
 }
