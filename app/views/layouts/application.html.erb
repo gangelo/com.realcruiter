@@ -12,19 +12,28 @@
 <body>
 
 <div class='page-container'>
-  <div class='header container'>
-    <div style='display:inline-block; float:left; width:auto'>
-      <span class='realcruiter-quote'>&quot;Your career, your way&quot;</span>
-      <%= render partial: 'shared/realcruiter_com_logo' %>
+  <div class='container header'>
+    <div style='row'>
+      <div class='col-md-6'>
+        <span class='realcruiter-quote'>&quot;Your career, your way&quot;</span>
+        <%= render partial: 'shared/realcruiter_com_logo' %>
+      </div>
+      <div class='col-md-6'>
+        <% if content_for? :right_header %>
+          <%= yield :right_header %>
+        <% elsif user_signed_in? %>
+          <%= render partial: 'shared/toolbar' %>
+        <% end %>
+      </div>
     </div>
-    <% if content_for? :right_header %>
-      <%= yield :right_header %>
-    <% end %>
   </div>
-
+  
   <div class='container'>
-    <p class='notice'><%= notice %></p>
-    <p class='alert'><%= alert %></p>
+    <div class='row'>
+      <div class='col-md-12'>
+        <%= render partial: 'shared/flash' if flash.any? %>
+      </div>
+    </div>
   </div>
     
   <div class='container body'>

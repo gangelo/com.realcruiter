@@ -1,0 +1,16 @@
+<%
+message_header = local_assigns.fetch(:message_header, "")
+style_css_class = local_assigns.fetch(:style_css_class, "")
+icon_css_class = local_assigns.fetch(:icon_css_class, "")
+%>
+
+<div class='<%= "#{style_css_class}" %>' role="alert">
+  <% if message_header.strip.length > 0 %>
+    <div class='pull-left' style='margin-right:0.5em'>
+      <span class='<%= "#{icon_css_class}" %>' aria-hidden='true'></span>
+      <span class='sr-only'>Error:</span>
+      <span class='alert-header'><%= message_header %></span>
+    </div>
+  <% end %>
+  <div class='alert-message'><%= flash_display %></div>
+</div>

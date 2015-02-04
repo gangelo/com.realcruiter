@@ -2,40 +2,12 @@
   <%= javascript_include_tag 'signup', 'data-turbolinks-track' => true %>
 <% end %>
 
-<% content_for :right_header do %>
-  <div class='clearfix pull-right form-inline'>
-    <%= form_tag root_path do %>
-      <div class='row'>
-        <div class='col-md-4'>
-          <%= text_field_tag :email, params[:email], class: 'form-control', placeholder: 'Email or username' %>
-        </div>
-
-        <div class='col-md-4'>
-          <%= text_field_tag :password, params[:password], type: 'password', class: 'form-control', placeholder: 'Password' %>
-        </div>  
-
-        <div class='col-md-4 actions'>
-          <%= submit_tag 'Log In', class: 'btn _btn-sm btn-default special-button' %>
-        </div>
-      </div>
-
-
-      <div class='row'>
-        <div class='col-md-4'>
-          <%= label_tag :keep_signed_in, class: 'checkbox nowrap' do %>
-            <%= check_box_tag :keep_signed_in, params[:keep_signed_in], false %>
-            Keep me logged in
-          <% end %>
-        </div>
-
-        <div class='col-md-8'>
-          <%= link_to '#', class: 'underline nowrap' do %>
-             Forgot your password?
-          <% end %>
-        </div>  
-      </div>
-    <% end %>
-  </div>
+<% if !user_signed_in? %>
+  <% content_for :right_header do %>
+    <div class='container form-inline'>
+      <%= render partial: 'shared/sign_in' %>
+    </div>
+  <% end %>
 <% end %>
 
 
@@ -47,7 +19,7 @@
       </div>
       <div class="clearfix"></div>
       <hr />
-      <%= render :partial => 'shared/sign_up' %>
+      <%= render partial: 'shared/sign_up' %>
     </div>
 
     <div class='col-md-8'>

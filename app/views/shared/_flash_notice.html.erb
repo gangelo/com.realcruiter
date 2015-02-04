@@ -1,0 +1,7 @@
+<%= render partial: 'shared/flash_display',
+  object: flash[:notice],
+  locals: {
+    message_header: local_assigns.fetch(:message_header, ""),
+    style_css_class: "alert alert-success",
+    icon_css_class:"icon-large icon-hand-right"
+} %>

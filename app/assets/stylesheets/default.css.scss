@@ -88,3 +88,13 @@ input.special-button {
 .nowrap {
   white-space: nowrap;
 }
+
+/* Alerts and notices */
+.alert-header {
+  font-size: ($base-font-size * 1) * $golden-ratio;
+  font-weight: bold;
+}
+
+.alert-message {
+  font-size: ($base-font-size * 1) * $golden-ratio;
+}
