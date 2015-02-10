@@ -13,7 +13,7 @@
   <% end %>
 
   <%= content_tag :div, :class => f.validation_class(:password, "form-group") do %>
-    <%= f.password_field :password_confirm, :placeholder => "Re-enter password", :class => 'form-control', autocomplete: :off %>
+    <%= f.password_field :password_confirmation, :placeholder => "Re-enter password", :class => 'form-control', autocomplete: :off %>
     <%= f.errors_for :password_confirmation %>
   <% end %>
 
