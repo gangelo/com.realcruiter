@@ -1,0 +1,2 @@
+class TechnicalRecruiterProfile < UserProfile
+end
