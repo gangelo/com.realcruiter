@@ -17,11 +17,11 @@
     <%= f.errors_for :password_confirmation %>
   <% end %>
 
-  <%= content_tag :div, :class => f.validation_class(:user_type, 'form-group') do %>
-    <%= f.radio_button :user_type, 'software_developer', checked: false, class: 'inline', disabled: 'disabled' %>
-    <%= label :software_developer, 'I am a Developer' %>
-    <%= f.radio_button :user_type, 'technical_rectuiter', checked: true, class: 'inline', disabled: 'disabled' %>
-    <%= label :technical_rectuiter, 'I am a Recruiter' %>
+  <%= content_tag :div, :class => f.validation_class(:profile, 'form-group') do %>
+    <%= radio_button_tag :profile, 'software_developer_profile', checked: false, class: 'inline' %>
+    <%= label :software_developer_profile, 'I am a Developer' %>
+    <%= radio_button_tag :profile, 'technical_recruiter_profile', checked: true, class: 'inline' %>
+    <%= label :technical_recruiter_profile, 'I am a Recruiter' %>
   <% end %>
 
 <%

@@ -7,4 +7,13 @@ class User < ActiveRecord::Base
   has_many :user_profiles
 
   validates :password_confirmation, presence: true
+
+  def add_profile(profile_type, params={})
+    case profile_type
+      when :technical_recruiter_profile
+        self.user_profiles << TechnicalRecruiterProfile.create(params)
+    else
+      raise ArgumentError, "Unrecognized profile type encountered: [#{profile_type}]"
+    end
+  end
 end
