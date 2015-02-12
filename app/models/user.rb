@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
       when :technical_recruiter_profile
         self.user_profiles << TechnicalRecruiterProfile.create(params)
     else
+      # TODO: Redirect to error page.
       raise ArgumentError, "Unrecognized profile type encountered: [#{profile_type}]"
     end
   end
