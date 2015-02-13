@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true
 
   def add_profile(profile_type, params={})
-    # TODO: Tighten up validation.
+    # TODO: Check correct number of params passed.
 
     raise(ArgumentError, "profile_type must be a String or Symbol") unless profile_type.respond_to?(:empty?) && (profile_type.is_a?(String) || profile_type.is_a?(Symbol))
     raise(ArgumentError, "profile_type cannot be empty or nil") if profile_type.nil? || profile_type.empty?
