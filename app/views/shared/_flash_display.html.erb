@@ -7,7 +7,7 @@ icon_css_class = local_assigns.fetch(:icon_css_class, "")
 <div class='<%= "#{style_css_class}" %>' role="alert">
   <% if message_header.strip.length > 0 %>
     <div class='pull-left' style='margin-right:0.5em'>
-      <span class='<%= "#{icon_css_class}" %>' aria-hidden='true'></span>
+      <span class='pull-left <%= "#{icon_css_class}" %>' aria-hidden='true'></span>
       <span class='sr-only'>Error:</span>
       <span class='alert-header'><%= message_header %></span>
     </div>
