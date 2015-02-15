@@ -1,3 +1,7 @@
+<% content_for :head do %>
+  <%= javascript_include_tag 'sign-up', 'data-turbolinks-track' => true %>
+<% end %>
+
 <%= form_for resource, :url => user_registration_path,
                        :builder => InlineErrorsBuilder,
                        :method => :POST,
@@ -18,9 +22,9 @@
   <% end %>
 
   <%= content_tag :div, :class => f.validation_class(:profile, 'form-group') do %>
-    <%= radio_button_tag :profile, 'software_developer_profile', checked: false, class: 'inline' %>
+    <%= radio_button_tag :profile, 'software_developer_profile', false, class: 'inline', disabled: :true %>
     <%= label :software_developer_profile, 'I am a Developer' %>
-    <%= radio_button_tag :profile, 'technical_recruiter_profile', checked: true, class: 'inline' %>
+    <%= radio_button_tag :profile, 'technical_recruiter_profile', true, class: 'inline' %>
     <%= label :technical_recruiter_profile, 'I am a Recruiter' %>
   <% end %>
 
@@ -35,14 +39,16 @@
 %>
 
   <div class='form-group'>
-    <%= text_field_tag :referral_code, params[:referral_Code], placeholder: 'Enter referral code', class: 'form-control', disabled: 'disabled' %>
+    <%= text_field_tag :referral_code, params[:referral_code], placeholder: 'Enter referral code', class: 'form-control', disabled: 'disabled' %>
   </div>
 
   <div class='form-group'>
-    <span class='terms-agreements small'>By clicking Sign Up, you agree to out Terms and that you have read our Data Usage Policy, including our Cookie Use.</span>
+    <span class='terms-agreements small'>By clicking Sign Up, you agree to our Terms and that you have read our Data Usage Policy, including our Cookie Use.</span>
   </div>
 
   <%= content_tag :div, class: "form-group tall" do %>  
     <%= f.submit 'Sign up', class: 'btn btn-sm btn-warning _pull-right special-button form-control' , style: 'width:100%' %>
   <% end %>
 <% end %>
+
+

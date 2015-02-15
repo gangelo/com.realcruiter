@@ -41,5 +41,9 @@
   </div>
 </div>
 
+<% if content_for? :javascripts %>
+  <%= yield :javascripts %>
+<% end %>
+
 </body>
 </html>

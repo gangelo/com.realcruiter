@@ -1,11 +1,7 @@
-<% content_for :head do %>
-  <%= javascript_include_tag 'signup', 'data-turbolinks-track' => true %>
-<% end %>
-
 <% if !user_signed_in? %>
   <% content_for :right_header do %>
     <div class='container form-inline'>
-      <%= render partial: 'shared/sign_in' %>
+      <%= render partial: 'shared/registration/sign_in' %>
     </div>
   <% end %>
 <% end %>
@@ -19,7 +15,7 @@
       </div>
       <div class="clearfix"></div>
       <hr />
-      <%= render partial: 'shared/sign_up' %>
+      <%= render partial: 'shared/registration/sign_up' %>
     </div>
 
     <div class='col-md-8'>
