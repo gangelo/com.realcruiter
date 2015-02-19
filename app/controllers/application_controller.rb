@@ -11,4 +11,9 @@ class ApplicationController < ActionController::Base
     # TODO: Implement this when referral_code is added to the User model.
     # devise_parameter_sanitizer.for(:sign_up) << :referral_code
   end
+
+  def after_sign_in_path_for(resource)
+    user_dashboard_path
+  end
+
 end
