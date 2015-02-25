@@ -22,7 +22,7 @@
   <% end %>
 
   <%= content_tag :div, :class => f.validation_class(:profile, 'form-group') do %>
-    <%= radio_button_tag :profile, 'software_developer_profile', false, class: 'inline', disabled: :true %>
+    <%= radio_button_tag :profile, 'software_developer_profile', false, class: 'inline' %>
     <%= label :software_developer_profile, 'I am a Developer' %>
     <%= radio_button_tag :profile, 'technical_recruiter_profile', true, class: 'inline' %>
     <%= label :technical_recruiter_profile, 'I am a Recruiter' %>
