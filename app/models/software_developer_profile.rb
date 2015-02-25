@@ -1,0 +1,2 @@
+class SoftwareDeveloperProfile < UserProfile
+end
