@@ -1,0 +1,2 @@
+class TechnicalRecruiterSkill < Skill
+end

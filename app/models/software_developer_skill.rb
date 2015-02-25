@@ -1,0 +1,2 @@
+class SoftwareDeveloperSkill < Skill
+end
