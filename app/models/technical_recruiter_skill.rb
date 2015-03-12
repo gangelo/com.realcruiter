@@ -1,2 +1,0 @@
-class TechnicalRecruiterSkill < Skill
-end

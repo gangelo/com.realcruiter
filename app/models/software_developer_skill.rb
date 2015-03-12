@@ -1,2 +1,0 @@
-class SoftwareDeveloperSkill < Skill
-end
