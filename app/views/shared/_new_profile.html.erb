@@ -1,0 +1,26 @@
+<%= form_for @user_profile, 
+                    url: profiles_path,
+                    builder: InlineErrorsBuilder,
+                    method: :POST,
+                    role: :form do |f| %>
+  <%= content_tag :div, class: f.validation_class(:profile_name, "form-group") do %>
+    <%= f.text_field :profile_name, placeholder: "Profile name", class: 'form-control', autocomplete: :off %>
+    <%= f.errors_for :profile_name %>
+  <% end %>
+
+  <%= content_tag :div, class: f.validation_class(:profile_type, 'form-group') do %>
+    <%= f.radio_button :profile_type, 'software_developer_profile', class: 'inline' %>
+    <%= f.label :profile_type, 'Software Developer Profile', value: 'software_developer_profile' %>
+    <%= f.radio_button :profile_type, 'technical_recruiter_profile', class: 'inline' %>
+    <%= f.label :profile_type, 'Technical Recruiter Profile', value: 'technical_recruiter_profile' %>
+    <%= f.errors_for :profile_type %>
+  <% end %>
+
+  <div class='form-group'>
+    <span class='terms-agreements small'>Click the <i>Create</i> button below to create a new profile.</span>
+  </div>
+
+  <%= content_tag :div, class: "form-group tall" do %>  
+    <%= f.submit 'Create', class: 'btn btn-sm btn-warning _pull-right special-button form-control', style: 'min-width:auto;max-width:25%;' %>
+  <% end %>
+<% end %>

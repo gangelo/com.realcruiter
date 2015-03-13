@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
 
   has_many :user_profiles
 
-  validates :password_confirmation, presence: true
+  validates_presence_of :password_confirmation
 
   def add_profile(profile_type, params={})
     # TODO: Check correct number of params passed.
