@@ -22,6 +22,16 @@ body {
   }
 }
 
+/* Realcruiter.com large dark */
+.realcruiter-com-large-dark {
+  @extend .realcruiter-com-large;
+
+  .real {  
+    font-weight: bold;
+    color: $default-orange-dark;
+  }
+}
+
 /* Realcruiter.com medium */
 .realcruiter-com-medium {
   @extend .realcruiter-com-large;
@@ -47,12 +57,22 @@ body {
   .community 
 */
 .realcruiter-community {
-  font-size: ($base-font-size * 2) * $golden-ratio;
+  $adjust-font-size: 1.5;
+
+  text-align: right;
+
+  .you-need-the {
+    font-size: ($base-font-size * 1.25) * $golden-ratio;
+    color: $default-orange-dark;
+  }
 
   .realcruiter {
+    line-height: .90;
+    font-size: ($adjust-font-size * ($base-font-size * 2)) * $golden-ratio;
+    
     .real {  
       font-weight: bold;
-      color: $default-orange;
+      color: $default-orange-dark;
     }
 
     .cruiter {   
@@ -61,13 +81,16 @@ body {
   }
 
   .community {
+    line-height: .90;
+    font-size: ($adjust-font-size * ($base-font-size * 2)) * $golden-ratio;   
+
     .com {  
       font-weight: bold;
-      color: $default-orange;
+      color: #000;
     }
 
     .munity {   
-      color: #000;
+      color: $default-orange-dark;
     }
   }
 }
@@ -97,4 +120,13 @@ input.special-button {
 
 .alert-message {
   font-size: ($base-font-size * 0.825) * $golden-ratio;
+}
+
+.flip-horizontal {
+   -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
 }
