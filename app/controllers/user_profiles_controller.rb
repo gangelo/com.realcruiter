@@ -1,4 +1,6 @@
 class UserProfilesController < ApplicationController
+	before_action :authenticate_user!
+
 	def new
 		@user_profile = UserProfile.new
 	end
@@ -12,8 +14,7 @@ class UserProfilesController < ApplicationController
 	  	if @user_profile.errors.any?
 		  	render :new
 		  else
-		  	# TODO: Redirect somewhere with alert.
-		  	render :new
+		  	redirect_to(dashboards_url, notice: 'Your new profile has been created!') and return
 		  end
 		end
   end
