@@ -17,10 +17,10 @@
   <% end %>
 
   <%= content_tag :div, class: f.validation_class(:skills, 'form-group panel panel-gray') do %>
-    <div class="panel-heading">Skills</div>
+    <div class="panel-heading"><%= label_tag 'Skills' %></div>
     <div class='panel-body'>
       <%= content_tag :div, class: 'form-group panel input-group' do %>
-        <%= text_field_tag :skill_search, nil, placeholder: 'Skill search...', class: 'form-control-flat skill-search', autocomplete: :off %>
+        <%= text_field_tag :skill_search, nil, placeholder: 'Skill search...', class: 'form-control skill-search', autocomplete: :off %>
         <span class='input-group-btn'>
           <button class='btn btn-default skill-button' type='button'>Add Skill</button>
         </span>
