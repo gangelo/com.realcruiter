@@ -6,6 +6,10 @@ $default-color: #333;
 body {
   margin: 8px;
   color: $default-color;
+  min-height:600px;
+}
+
+.page-container {
 }
 
 /* Realcruiter.com large */
