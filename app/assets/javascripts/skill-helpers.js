@@ -26,6 +26,10 @@ Realcruiter.SkillHelpers = {
       Realcruiter.SkillHelpers.SkillsWidget._resyncSkills();
     },
 
+    skillCount : function() {
+      return $('.btn-skill-name').length;
+    },
+
     _attachHandlers : function() {
       $(function() {
         $(document).on('click','.skill-button', function() { 
@@ -50,7 +54,7 @@ Realcruiter.SkillHelpers = {
     },
 
     _addSkill : function(skill) {
-      var index = $('.btn-skill-name').length;
+      var index = Realcruiter.SkillHelpers.SkillsWidget.skillCount();
 
       var button = $("<button type='button' class='btn btn-lg btn-skill'/>").append("<i class='fa fa-times fa-lg'></i>&nbsp;").last().append($('<span />').text(skill));
       var input1 = $("<input type='hidden' name='" + Realcruiter.SkillHelpers.SkillsWidget._buildElementName(index, 'id') + "' id='" + Realcruiter.SkillHelpers.SkillsWidget._buildElementId(index, 'id') + "' class='btn-skill-id' value='' />");

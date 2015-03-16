@@ -28,6 +28,10 @@
 // Example:
 // @link-color: #ff0000;
 
+@golden-ratio: 1.618;
+@default-orange: #f90;
+@default-orange-dark: #b45f06;
+
 .panel-gray {
 	&:extend(.panel-primary > .panel-heading);
 	color: #333 !important;
@@ -40,7 +44,7 @@
 }
 
 .panel-pad-lg {
-	padding: 25px;
+	padding: 15px;
 }
 
 // Skill buttons
@@ -52,6 +56,31 @@
 
 	&>i {
 		color:#356F35;
+	}
+}
+
+.modal>.modal-dialog>.modal-content>.modal-header {
+	&.default {
+		color: #333;
+		background-color: #eee;
+		border-top-left-radius: 6px;
+  		border-top-right-radius: 6px;
+	}
+
+	&.orange {
+		color: #333;
+		background-color: @default-orange;
+		border-top-left-radius: 6px;
+  		border-top-right-radius: 6px;
+	}
+}
+
+.btn-special {
+	&:extend(.btn-warning);
+	background-color: @default-orange;
+
+	&.dark {
+		color: #333;
 	}
 }
 

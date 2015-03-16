@@ -3,6 +3,7 @@
   <%= javascript_include_tag 'jquery-ui/autocomplete' %>
   <%= javascript_include_tag 'skill-search' %>
   <%= javascript_include_tag 'skill-helpers' %>
+  <%= javascript_include_tag 'create-profile' %>
 
   <style type='text/css'>
     .ui-autocomplete-loading {
@@ -23,17 +24,6 @@
     }
   </style>
 
-  <script type='text/javascript'>
-    function onAddSkill(skill) {
-      Realcruiter.SkillHelpers.SkillsWidget.addSkill(skill);
-    };
-
-    function onRemoveSkill(skill_button) {
-      return true;
-    };
-
-    Realcruiter.SkillHelpers.SkillsWidget.init(onAddSkill, onRemoveSkill);  
-  </script>
 <% end %>
 
 <div class='container'>
@@ -49,3 +39,5 @@
 		</div>
 	</div>
 </div>
+
+<%= render partial: 'shared/modal_dialog' %>
