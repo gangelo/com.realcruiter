@@ -1,15 +1,16 @@
 function onReady() {
-  if ($('#profile_technical_recruiter_profile').is(':checked')) {
+  if ($('#profile_type_technical_recruiter_profile').is(':checked')) {
     $('#referral_code').show();
   } else {
     $('#referral_code').hide();
   }
 
-  $('input[name=profile]:radio').change(function () {
+  $('input[name=profile_type]:radio').change(function () {
     $('#referral_code').toggle(200);
     $('#referral_code').val('');
   });
 };
 
-$(document).ready(onReady);
-$(document).on('page:load', onReady);
+$(function() {
+	onReady() 
+});
