@@ -52,7 +52,7 @@ Realcruiter.SkillHelpers = {
     _addSkill : function(skill) {
       var index = $('.btn-skill-name').length;
 
-      var button = $("<button type='button' class='btn btn-skill'/>").append("<i class='fa fa-times fa-lg'></i>&nbsp;").last().append($('<span />').text(skill));
+      var button = $("<button type='button' class='btn btn-lg btn-skill'/>").append("<i class='fa fa-times fa-lg'></i>&nbsp;").last().append($('<span />').text(skill));
       var input1 = $("<input type='hidden' name='" + Realcruiter.SkillHelpers.SkillsWidget._buildElementName(index, 'id') + "' id='" + Realcruiter.SkillHelpers.SkillsWidget._buildElementId(index, 'id') + "' class='btn-skill-id' value='' />");
       var input2 = $("<input type='hidden' name='" + Realcruiter.SkillHelpers.SkillsWidget._buildElementName(index, 'name') + "' id='" + Realcruiter.SkillHelpers.SkillsWidget._buildElementId(index, 'name') + "' class='btn-skill-name' value='" + skill + "' />");
 
