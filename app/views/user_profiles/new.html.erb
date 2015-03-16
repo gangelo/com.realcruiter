@@ -1,3 +1,41 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag 'jquery-ui/autocomplete' %>
+  <%= javascript_include_tag 'jquery-ui/autocomplete' %>
+  <%= javascript_include_tag 'skill-search' %>
+  <%= javascript_include_tag 'skill-helpers' %>
+
+  <style type='text/css'>
+    .ui-autocomplete-loading {
+      background: white url('<%= image_path("loading-24x24.gif") %>') right center no-repeat;
+    }
+
+    .ui-autocomplete {
+      max-height: 350px;
+      overflow-y: auto;
+      /* prevent horizontal scrollbar */
+      overflow-x: hidden;
+    }
+    /* IE 6 doesn't support max-height
+     * we use height instead, but this forces the menu to always be this tall
+     */
+    * html .ui-autocomplete {
+      height: 350px;
+    }
+  </style>
+
+  <script type='text/javascript'>
+    function onAddSkill(skill) {
+      Realcruiter.SkillHelpers.SkillsWidget.addSkill(skill);
+    };
+
+    function onRemoveSkill(skill_button) {
+      return true;
+    };
+
+    Realcruiter.SkillHelpers.SkillsWidget.init(onAddSkill, onRemoveSkill);  
+  </script>
+<% end %>
+
 <div class='container'>
 	<div class='row'>
 		<div class='col-md-12'>
@@ -6,7 +44,7 @@
 	</div>
 
 	<div class='row'>
-		<div class='col-md-5'>
+		<div class='col-md-6 col-md-offset-3'>
 			<%= render partial: 'shared/new_profile' %>
 		</div>
 	</div>

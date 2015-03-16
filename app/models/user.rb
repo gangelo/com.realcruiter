@@ -20,7 +20,8 @@ class User < ActiveRecord::Base
       user_profile = profile_type.classify.constantize.create(params)
       self.user_profiles << user_profile
       user_profile
-    rescue
+    rescue => error
+      logger.info '*** error encountered: ' + error.message + ' ***'
       raise ArgumentError, "Unrecognized profile type encountered: [#{profile_type}]"
     end
   end

@@ -27,3 +27,40 @@
 //
 // Example:
 // @link-color: #ff0000;
+
+.form-control-flat {
+	&:extend(.form-control);
+
+	-webkit-border-radius: 0 !important;
+	 -moz-border-radius: 0 !important;
+	      border-radius: 0 !important;
+}
+
+
+.panel-gray {
+	&:extend(.panel-primary > .panel-heading);
+	color: #333 !important;
+	background-color: #eee !important;
+	border-color: #ccc !important;
+}
+
+.panel-gray > .panel-body {
+	background-color: #fff;
+}
+
+// Skill buttons
+.btn-skill {
+	&:extend(.btn-success);
+
+	margin-right:.33em;
+	margin-bottom:.33em;
+
+	&>i {
+		color:#356F35;
+	}
+}
+
+
+
+
+

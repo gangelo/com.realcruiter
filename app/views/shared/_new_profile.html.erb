@@ -16,6 +16,33 @@
     <%= f.errors_for :profile_type %>
   <% end %>
 
+  <%= content_tag :div, class: f.validation_class(:skills, 'form-group panel panel-gray') do %>
+    <div class="panel-heading">Skills</div>
+    <div class='panel-body'>
+      <%= content_tag :div, class: 'form-group panel input-group' do %>
+        <%= text_field_tag :skill_search, nil, placeholder: 'Skill search...', class: 'form-control-flat skill-search', autocomplete: :off %>
+        <span class='input-group-btn'>
+          <button class='btn btn-default skill-button' type='button'>Add Skill</button>
+        </span>
+      <% end %>
+
+      <!-- TODO: Move to InlineErrorsBuilder - start /-->
+      <%= content_tag :div, class: 'form-group panel skills-container', style: 'min-height:250px;' do %>
+        <%= f.fields_for :skills do | f | %>
+          <%= content_tag :span do %>
+            <%= f.button :name, type: :button, class: 'btn btn-skill' do %>
+              <i class='fa fa-times fa-lg'></i>&nbsp;<%= f.object.name %>
+            <% end %>
+            <%= f.hidden_field :id, class: 'btn-skill-id' %>
+            <%= f.hidden_field :name, class: 'btn-skill-name' %>
+          <% end %>
+        <% end %>
+      <% end %>
+      <!-- TODO: Move to InlineErrorsBuilder - end /-->
+      
+    </div>
+  <% end %>
+
   <div class='form-group'>
     <span class='terms-agreements small'>Click the <i>Create</i> button below to create a new profile.</span>
   </div>

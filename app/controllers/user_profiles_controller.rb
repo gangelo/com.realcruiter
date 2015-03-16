@@ -19,7 +19,23 @@ class UserProfilesController < ApplicationController
 		end
   end
 
+  def skills
+    @skills = Skill.order(:name).where("name ILIKE ?", "#{skills_search_params[:term]}%")
+    respond_to do |format|
+      format.html
+      format.json { 
+        render json: @skills.map(&:name)
+      }
+    end
+  end
+
+  private
+
   def user_profile_params
-    params.require(:user_profile).permit(:profile_name, :profile_type)
+    params.require(:user_profile).permit(:profile_name, :profile_type, skills_attributes: [:id, :name])
+  end
+
+  def skills_search_params
+    params.permit(:term)
   end
 end

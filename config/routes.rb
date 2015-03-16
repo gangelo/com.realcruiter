@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  #get 'user_profiles/create'
-
+	get '/profiles/skills.json', to: 'user_profiles#skills', as: :user_profile_skills
   resources :user_profiles, path: :profiles, only: [:new, :create], as: :profiles
+  
 
   get '/dashboards', to: 'dashboards#index'
 
