@@ -11,7 +11,11 @@ class InlineErrorsBuilder < ActionView::Helpers::FormBuilder
   # Generates HTML for displaying errors related to the attribute passed as 'meth'
   #
   def errors_for(meth, options = {})
-    @template.content_tag :p, @object.errors[meth].join('<br>').html_safe, :class => 'help-block' if has_errors?(meth)
+    #@template.content_tag :div, @object.errors[meth].join('<i class="fa fa-times-circle"></i><br/>').html_safe, class: 'alert alert-danger', role: 'alert' if has_errors?(meth)
+    if has_errors?(meth)
+      innerHtml = @template.content_tag(:i, nil, class: 'fa fa-times-circle', style: 'margin-right:8px;') + @object.errors[meth].join('<br/>').capitalize#.html_safe
+      @template.content_tag(:div, innerHtml, class: 'input-lg alert alert-danger', role: 'alert') 
+    end
   end
 
   # Adds the 'has-error' class to the list of other classes passed if there are
