@@ -12,10 +12,10 @@ $(function() {
 
   $('.modal').on('show.bs.modal', function (event) {
     var modal = $(this);
-    modal.find('.modal-title').html('<i class="fa fa-exclamation-circle fa-2x modal-title">&nbsp;Whoa, Nelly!</i>');
+    modal.find('.modal-title').html('<span class="fa fa-2x">Whoa, Nelly!</i>');
     modal.find('.modal-header').addClass('orange');
-    modal.find('.modal-body').html("Your profile has no skills! Users can't find/connect with you if your profile has no skills! If you're planning on adding skills later, click the <kbd>Thanks for the warning...</kbd> button. If you want to add skills to this profile before saving, click the <kbd>Cancel</kbd> button.");
-    modal.find('.btn-ok').addClass('btn-special dark').text('Thanks for the warning, do it anyway!').click(function() { $(submitButtonSelector).off('click'); $(submitButtonSelector).click(); });
+    modal.find('.modal-body').html("Your profile has no skills; other users will not be able to find/connect with you until it does! Click the <kbd>Thanks for the warning...</kbd> button if you plan on adding skills later. Click the <kbd>Cancel</kbd> button if you'd like to add them now.");
+    modal.find('.btn-ok').addClass('btn-special dark').text("Thanks for the warning, I'll add them later.").click(function() { $(submitButtonSelector).off('click'); $(submitButtonSelector).click(); });
     modal.find('.btn-cancel').addClass('btn-default').text('Cancel');
   });
 });

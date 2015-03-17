@@ -54,6 +54,7 @@ Realcruiter.SkillHelpers = {
     },
 
     _addSkill : function(skill) {
+      skill = skill.toLowerCase();
       var index = Realcruiter.SkillHelpers.SkillsWidget.skillCount();
 
       var button = $("<button type='button' class='btn btn-lg btn-skill'/>").append("<i class='fa fa-times fa-lg'></i>&nbsp;").last().append($('<span />').text(skill));
