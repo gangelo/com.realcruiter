@@ -2,14 +2,18 @@ Realcruiter = (typeof Realcruiter === 'undefined') ? {} : Realcruiter;
 
 Realcruiter.SkillHelpers = { 
   SkillsWidget : {
+    _userProfileType : null,
+    _userProfileTypeSelector : null,
     _onAddAkillCallback : null,
     _onRemoveSkillCallback : null,
 
-    init : function(onAddSkillCallback, onRemoveSkillCallback) {
+    init : function(userProfileTypeSelector, onAddSkillCallback, onRemoveSkillCallback) {
+      this._userProfileTypeSelector = userProfileTypeSelector;
       this._onAddSkillCallback = onAddSkillCallback;
       this._onRemoveSkillCallback = onRemoveSkillCallback;
 
       $(function() {
+        Realcruiter.SkillHelpers.SkillsWidget._userProfileType = $(Realcruiter.SkillHelpers.SkillsWidget._userProfileTypeSelector).val();
         $('.skill-button').attr('disabled', true);
       });
     },
@@ -65,11 +69,13 @@ Realcruiter.SkillHelpers = {
     },
 
     _buildElementId : function(index, skill_property) {
-      return "user_profile_skills_attributes_" + index + "_" + skill_property;
+      var userProfileType = Realcruiter.SkillHelpers.SkillsWidget._userProfileType;
+      return userProfileType + "_skills_attributes_" + index + "_" + skill_property;
     },
 
     _buildElementName : function(index, skill_property) {
-      return "user_profile[skills_attributes][" + index + "][" + skill_property + "]";
+      var userProfileType = Realcruiter.SkillHelpers.SkillsWidget._userProfileType;
+      return userProfileType + "[skills_attributes][" + index + "][" + skill_property + "]";
     },
 
     _resyncSkills : function() {

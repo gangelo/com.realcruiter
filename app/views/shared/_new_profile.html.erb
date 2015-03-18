@@ -1,9 +1,11 @@
 <div class='panel-pad-lg'>
-  <%= form_for @user_profile, 
+  <%= form_for [:user_profile, @user_profile], 
                       url: profiles_path,
                       builder: InlineErrorsBuilder,
                       method: :POST,
                       role: :form do |f| %>
+    <%= f.hidden_field :profile_type, name: nil, id: nil, class: 'user-profile-type' %>
+
     <%= content_tag :div, class: f.validation_class(:profile_name, "form-group form-group-lg") do %>
       <%= f.text_field :profile_name, placeholder: "Profile name", class: 'form-control', autocomplete: :off %>
       <%= f.errors_for :profile_name %>
@@ -54,7 +56,8 @@
     </div>
 
     <%= content_tag :div, class: "form-group form-group-lg tall" do %>  
-      <%= f.submit 'Create', id: 'btn-create-profile', class: 'btn btn-sm special-button form-control', style: 'min-width:auto;max-width:25%;' %>
+      <%= link_to 'Cancel', dashboards_path, class: 'btn btn-lg btn-default btn-cancel form-control', style: 'min-width:auto;max-width:25%;' %>
+      <%= f.submit 'Create', id: 'btn-create-profile', class: 'btn btn-lg btn-special dark form-control', style: 'min-width:auto;max-width:25%;' %>
     <% end %>
   <% end %>
 </div>

@@ -1,22 +1,20 @@
+require 'profile_creator'
+
 class UserProfilesController < ApplicationController
 	before_action :authenticate_user!
 
 	def new
-		@user_profile = UserProfile.new
+    @user_profile = UserProfile.new({profile_type: :user_profile})
 	end
 
   def create
-  	@user_profile = UserProfile.new(user_profile_params)
-  	if @user_profile.invalid?
-  		render :new
-  	else
-	  	@user_profile = current_user.add_profile(user_profile_params[:profile_type].to_sym, user_profile_params)
-	  	if @user_profile.errors.any?
-		  	render :new
-		  else
-		  	redirect_to(dashboards_url, notice: 'Your new profile has been created!') and return
-		  end
-		end
+    interactor = ProfileCreator.new(user_profile_params, current_user)
+    if interactor.execute
+      redirect_to(dashboards_url, notice: 'Your new profile has been created!') and return
+    else
+      @user_profile = interactor.profile
+      render :new
+    end
   end
 
   def skills
@@ -32,7 +30,10 @@ class UserProfilesController < ApplicationController
   private
 
   def user_profile_params
-    params.require(:user_profile).permit(:profile_name, :profile_type, skills_attributes: [:id, :name])
+    profile_type = :user_profile if params.has_key? :user_profile
+    profile_type = :technical_recruiter_profile if params.has_key? :technical_recruiter_profile
+    profile_type = :software_developer_profile if params.has_key? :software_developer_profile
+    params.require(profile_type).permit(:profile_name, :profile_type, skills_attributes: [:id, :name])
   end
 
   def skills_search_params

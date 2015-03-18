@@ -75,6 +75,7 @@
 	}
 }
 
+//
 .btn-special {
 	&:extend(.btn-warning);
 	background-color: @default-orange;
@@ -82,6 +83,25 @@
 	&.dark {
 		color: #333;
 	}
+}
+
+//
+a.btn {
+	&:extend(.btn);
+	color: inherit;
+}
+
+a.btn-special {
+	&:extend(.btn-special);
+}
+
+//
+a.btn-default {
+	&:extend(.btn-default);
+}
+
+a.btn-cancel {
+	&:extend(.btn-cancel);
 }
 
 
