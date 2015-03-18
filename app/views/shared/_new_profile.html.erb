@@ -1,63 +1,61 @@
-<div class='panel-pad-lg'>
-  <%= form_for [:user_profile, @user_profile], 
-                      url: profiles_path,
-                      builder: InlineErrorsBuilder,
-                      method: :POST,
-                      role: :form do |f| %>
-    <%= f.hidden_field :profile_type, name: nil, id: nil, class: 'user-profile-type' %>
+<%= form_for [:user_profile, @user_profile], 
+                    url: profiles_path,
+                    builder: InlineErrorsBuilder,
+                    method: :POST,
+                    role: :form do |f| %>
+  <%= f.hidden_field :profile_type, name: nil, id: nil, class: 'user-profile-type' %>
 
-    <%= content_tag :div, class: f.validation_class(:profile_name, "form-group form-group-lg") do %>
-      <%= f.text_field :profile_name, placeholder: "Profile name", class: 'form-control', autocomplete: :off %>
-      <%= f.errors_for :profile_name %>
+  <%= content_tag :div, class: f.validation_class(:profile_name, "form-group form-group-lg") do %>
+    <%= f.text_field :profile_name, placeholder: "Profile name", class: 'form-control', autocomplete: :off %>
+    <%= f.errors_for :profile_name %>
+  <% end %>
+
+  <%= content_tag :div, class: f.validation_class(:profile_type, 'form-group form-group-lg') do %>
+    <%= f.label :profile_type, nil, value: 'software_developer_profile', class: 'input-lg radio-inline' do %>
+      <%= f.radio_button :profile_type, 'software_developer_profile' %>
+      Software Developer Profile
     <% end %>
 
-    <%= content_tag :div, class: f.validation_class(:profile_type, 'form-group form-group-lg') do %>
-      <%= f.label :profile_type, nil, value: 'software_developer_profile', class: 'input-lg radio-inline' do %>
-        <%= f.radio_button :profile_type, 'software_developer_profile' %>
-        Software Developer Profile
-      <% end %>
-
-      <%= f.label :profile_type, nil, value: 'technical_recruiter_profile', class: 'input-lg radio-inline' do %>
-        <%= f.radio_button :profile_type, 'technical_recruiter_profile' %>      
-        Technical Recruiter Profile
-      <% end %>
-      <%= f.errors_for :profile_type %>
+    <%= f.label :profile_type, nil, value: 'technical_recruiter_profile', class: 'input-lg radio-inline' do %>
+      <%= f.radio_button :profile_type, 'technical_recruiter_profile' %>      
+      Technical Recruiter Profile
     <% end %>
+    <%= f.errors_for :profile_type %>
+  <% end %>
 
-    <%= content_tag :div, class: f.validation_class(:skills, 'form-group form-group-lg panel panel-gray') do %>
-      <div class="panel-heading"><%= label_tag 'Skills', nil, class: 'input-lg' %></div>
-      <div class='panel-body'>
-        <%= content_tag :div, class: 'form-group panel input-group' do %>
-          <%= text_field_tag :skill_search, nil, placeholder: 'Skill search...', class: 'form-control skill-search', autocomplete: :off %>
-          <span class='input-group-btn'>
-            <button class='btn btn-default btn-lg skill-button' type='button'>Add Skill</button>
-          </span>
-        <% end %>
+  <%= content_tag :div, class: f.validation_class(:skills, 'form-group form-group-lg panel panel-gray') do %>
+    <div class="panel-heading"><%= label_tag 'Skills', nil, class: 'input-lg' %></div>
+    <div class='panel-body'>
+      <%= content_tag :div, class: 'form-group panel input-group' do %>
+        <%= text_field_tag :skill_search, nil, placeholder: 'Skill search...', class: 'form-control skill-search', autocomplete: :off %>
+        <span class='input-group-btn'>
+          <button class='btn btn-default btn-lg skill-button' type='button'>Add Skill</button>
+        </span>
+      <% end %>
 
-        <!-- TODO: Move to InlineErrorsBuilder - start /-->
-        <%= content_tag :div, class: 'form-group-lg panel skills-container', style: 'min-height:250px;' do %>
-          <%= f.fields_for :skills do | f | %>
-            <%= content_tag :span do %>
-              <%= f.button :name, type: :button, class: 'btn btn-lg btn-skill' do %>
-                <i class='fa fa-times fa-lg'></i>&nbsp;<%= f.object.name %>
-              <% end %>
-              <%= f.hidden_field :id, class: 'btn-skill-id' %>
-              <%= f.hidden_field :name, class: 'btn-skill-name' %>
+      <!-- TODO: Move to InlineErrorsBuilder - start /-->
+      <%= content_tag :div, class: 'form-group-lg panel skills-container', style: 'min-height:250px;' do %>
+        <%= f.fields_for :skills do | f | %>
+          <%= content_tag :span do %>
+            <%= f.button :name, type: :button, class: 'btn btn-lg btn-skill' do %>
+              <i class='fa fa-times fa-lg'></i>&nbsp;<%= f.object.name %>
             <% end %>
+            <%= f.hidden_field :id, class: 'btn-skill-id' %>
+            <%= f.hidden_field :name, class: 'btn-skill-name' %>
           <% end %>
         <% end %>
-        <!-- TODO: Move to InlineErrorsBuilder - end /-->
-        
-      </div>
-    <% end %>
-
-    <div class='form-group form-group-lg'>
-      <span class='instructions'>Click the <i>Create</i> button below to create a new profile.</span>
+      <% end %>
+      <!-- TODO: Move to InlineErrorsBuilder - end /-->
+      
     </div>
-
-    <%= content_tag :div, class: "form-group form-group-lg tall" do %>  
-      <%= link_to 'Cancel', dashboards_path, class: 'btn btn-lg btn-default btn-cancel form-control', style: 'min-width:auto;max-width:25%;' %>
-      <%= f.submit 'Create', id: 'btn-create-profile', class: 'btn btn-lg btn-special dark form-control', style: 'min-width:auto;max-width:25%;' %>
-    <% end %>
   <% end %>
-</div>
+
+  <div class='form-group form-group-lg'>
+    <span class='instructions'>Click the <i>Create</i> button below to create a new profile.</span>
+  </div>
+
+  <%= content_tag :div, class: "form-group form-group-lg tall" do %>  
+    <%= link_to 'Cancel', dashboards_path, class: 'btn btn-lg btn-default btn-cancel form-control', style: 'min-width:auto;max-width:25%;' %>
+    <%= f.submit 'Create', id: 'btn-create-profile', class: 'btn btn-lg btn-special dark form-control', style: 'min-width:auto;max-width:25%;' %>
+  <% end %>
+<% end %>

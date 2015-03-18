@@ -1,0 +1,24 @@
+
+<table class='table table-striped input-lg'>
+  <thead>
+    <tr>
+      <th>Profile Name</th>
+      <th>Profile Type</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% user_profiles.each do | profile | %>
+    <tr>
+      <%= content_tag :td, profile.profile_name %>
+      <%= content_tag :td do %>
+        <%
+        css_class = profile.type.match(/recruiter/i) ? 'label-success' : 'label-primary'
+        %>
+        <span class='label <%=css_class %>'><%=profile.type.titleize %></span>
+      <% end %>
+      <%= content_tag :td, profile.created_at.strftime('%m-%d-%Y') %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -3,6 +3,10 @@ require 'profile_creator'
 class UserProfilesController < ApplicationController
 	before_action :authenticate_user!
 
+  def index
+    @user_profiles = UserProfile.where(user_id: current_user.id).order(:profile_name)
+  end
+
 	def new
     @user_profile = UserProfile.new({profile_type: :user_profile})
 	end
