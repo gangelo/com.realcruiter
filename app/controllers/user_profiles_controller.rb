@@ -42,9 +42,13 @@ class UserProfilesController < ApplicationController
   private
 
   def create_params
-    profile_type = :user_profile if params.has_key? :user_profile
-    profile_type = :technical_recruiter_profile if params.has_key? :technical_recruiter_profile
-    profile_type = :software_developer_profile if params.has_key? :software_developer_profile
+    profile_type = if params.has_key? :user_profile
+      :user_profile
+    elsif params.has_key? :technical_recruiter_profile
+      :technical_recruiter_profile
+    elsif params.has_key? :software_developer_profile
+      :software_developer_profile
+    end
     params.require(profile_type).permit(:profile_name, :profile_type, skills_attributes: [:id, :name])
   end
 
