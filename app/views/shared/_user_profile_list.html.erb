@@ -12,14 +12,16 @@
     <tr>
       <%= content_tag :td, profile.profile_name %>
       <%= content_tag :td do %>
-        <%
-        css_class = profile.type.match(/recruiter/i) ? 'label-success' : 'label-primary'
-        %>
+        <% css_class = profile.type.match(/recruiter/i) ? 'label-success' : 'label-primary' %>
         <span class='label <%=css_class %>'><%=profile.type.titleize %></span>
       <% end %>
       <%= content_tag :td, profile.created_at.strftime('%m-%d-%Y') %>
       <td>
-        <%= button_to destroy_profile_path, { method: :delete, class: 'btn-delete btn-transparent', title: 'Delete', data: { profile_name: "#{profile.profile_name}" } } do %>
+        <%= link_to edit_profile_path(profile), { class: 'pull-left btn btn-edit transparent', title: 'Edit profile' } do %>
+          <%= content_tag :i, nil, class: 'fa fa-pencil fa-2x' %>
+        <% end %>
+
+        <%= button_to destroy_profile_path, { method: :delete, class: 'btn btn-delete transparent', title: 'Delete profile', data: { profile_name: "#{profile.profile_name}" } } do %>
           <%= content_tag :i, nil, class: 'fa fa-times fa-2x' %>
           <%=hidden_field_tag :profile_id, profile.id %>
         <% end %>
