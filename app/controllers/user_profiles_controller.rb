@@ -21,6 +21,11 @@ class UserProfilesController < ApplicationController
     end
   end
 
+  def destroy
+    current_user.user_profiles.find(params[:profile_id]).delete
+    redirect_to profiles_url, notice: 'Profile deleted'
+  end
+
   def skills
     @skills = Skill.order(:name).where("name ILIKE ?", "#{skills_search_params[:term]}%")
     respond_to do |format|
