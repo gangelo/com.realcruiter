@@ -50,6 +50,13 @@ body {
   font-size: $base-font-size;
 }
 
+/* Realcruiter.com small */
+.realcruiter-com-navbar {
+  @extend .realcruiter-com-large;
+
+  font-size: $base-font-size + .25;
+}
+
 /* Realcruiter.com official quote */
 .realcruiter-quote {
   font-size: $base-font-size * $golden-ratio;

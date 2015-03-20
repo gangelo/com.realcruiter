@@ -12,6 +12,11 @@
 <body>
 
 <div class='page-container'>
+  <% if current_user? && false %>
+    <div class='container navbar'>
+      <%= render partial: 'shared/navbar' %>
+    </div>
+  <% end %>
   <div class='container header'>
     <div class='row'>
       <div class='col-md-6'>

@@ -4,4 +4,8 @@ module ApplicationHelper
   def resource
     current_user || User.new
   end
+
+  def current_user?
+    current_user
+  end
 end

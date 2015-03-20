@@ -1,9 +1,10 @@
 <%
 size = local_assigns.fetch(:size, :large)
 display = local_assigns.fetch(:display, :inline)
+css_class = local_assigns.fetch(:css_class, '')
 %>
 
-<span class='realcruiter-com-<%=size.to_s%>' style='display:<%=display.to_s%>;'>
+<span class='realcruiter-com-<%=size.to_s%> <%=css_class%>' style='display:<%=display.to_s%>;'>
   <%= link_to root_path, style: 'text-decoration:none;', alt: 'Realcruiter.com' do %>
   	<span class='real'>Real</span><span class='cruiter'>cruiter.com</span>
 	<% end %>
