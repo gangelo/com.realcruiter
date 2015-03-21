@@ -1,26 +1,36 @@
-<%= form_for [:user_profile, @user_profile], 
-                    url: profiles_path,
-                    builder: InlineErrorsBuilder,
-                    method: :POST,
-                    role: :form do |f| %>
-  <%= f.hidden_field :profile_type, name: nil, id: nil, class: 'user-profile-type' %>
+<%
+edit_mode = local_assigns.fetch(:mode) == :edit
+%>
 
+<%= form_for @user_profile, 
+                    url: edit_mode ? profile_path : profiles_path,
+                    builder: InlineErrorsBuilder,
+                    method: edit_mode ? :PUT : :POST,
+                    role: :form do |f| %>
   <%= content_tag :div, class: f.validation_class(:profile_name, "form-group form-group-lg") do %>
     <%= f.text_field :profile_name, placeholder: "Profile name", class: 'form-control', autocomplete: :off %>
     <%= f.errors_for :profile_name %>
   <% end %>
 
-  <%= content_tag :div, class: f.validation_class(:profile_type, 'form-group form-group-lg') do %>
-    <%= f.label :profile_type, nil, value: 'software_developer_profile', class: 'input-lg radio-inline' do %>
-      <%= f.radio_button :profile_type, 'software_developer_profile' %>
-      Software Developer Profile
-    <% end %>
+  <% if edit_mode %>
+    <%= f.hidden_field :type, class: 'user-profile-type', data: { profile_type: @user_profile.type.underscore } %>
+    <div class='form-group form-group-lg input-lg panel'>
+      <%= f.label :profile_type, nil, value: @user_profile.type.titleize, style: 'text-transform: capitalize !important;' %>
+    </div>
+  <% else %>
+    <%= f.hidden_field :profile_type, name: nil, id: nil, class: 'user-profile-type', data: { profile_type: @user_profile.profile_type } %>
+    <%= content_tag :div, class: f.validation_class(:profile_type, 'form-group form-group-lg') do %>
+      <%= f.label :profile_type, nil, value: SoftwareDeveloperProfile.name.underscore, class: 'input-lg radio-inline' do %>
+        <%= f.radio_button :profile_type, SoftwareDeveloperProfile.name.underscore %>
+        Software Developer Profile
+      <% end %>
 
-    <%= f.label :profile_type, nil, value: 'technical_recruiter_profile', class: 'input-lg radio-inline' do %>
-      <%= f.radio_button :profile_type, 'technical_recruiter_profile' %>      
-      Technical Recruiter Profile
+      <%= f.label :profile_type, nil, value: TechnicalRecruiterProfile.name.underscore, class: 'input-lg radio-inline' do %>
+        <%= f.radio_button :profile_type, TechnicalRecruiterProfile.name.underscore %>      
+        Technical Recruiter Profile
+      <% end %>
+      <%= f.errors_for :profile_type %>
     <% end %>
-    <%= f.errors_for :profile_type %>
   <% end %>
 
   <%= content_tag :div, class: f.validation_class(:skills, 'form-group form-group-lg panel panel-gray') do %>
@@ -56,6 +66,8 @@
 
   <%= content_tag :div, class: "form-group form-group-lg tall" do %>  
     <%= link_to 'Cancel', dashboards_path, class: 'btn btn-lg btn-default btn-cancel form-control', style: 'min-width:auto;max-width:25%;' %>
-    <%= f.submit 'Create', id: 'btn-create-profile', class: 'btn btn-lg btn-special dark form-control', style: 'min-width:auto;max-width:25%;' %>
+    <%= f.submit edit_mode ? 'Save' : 'Create', id: 'btn-create-profile', class: 'btn btn-lg btn-special dark form-control', style: 'min-width:auto;max-width:25%;' %>
   <% end %>
 <% end %>
+
+

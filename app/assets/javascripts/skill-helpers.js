@@ -13,7 +13,7 @@ Realcruiter.SkillHelpers = {
       this._onRemoveSkillCallback = onRemoveSkillCallback;
 
       $(function() {
-        Realcruiter.SkillHelpers.SkillsWidget._userProfileType = $(Realcruiter.SkillHelpers.SkillsWidget._userProfileTypeSelector).val();
+        Realcruiter.SkillHelpers.SkillsWidget._userProfileType = $(Realcruiter.SkillHelpers.SkillsWidget._userProfileTypeSelector).data('profile-type');
         $('.skill-button').attr('disabled', true);
       });
     },

@@ -8,10 +8,25 @@ class UserProfilesController < ApplicationController
   end
 
   def edit
+    # TODO: Strong params
+    @user_profile = current_user.user_profiles.find(params[:id])
+    render layout: 'edit_profile'
+  end
+
+  def update
+    #binding.pry
+    @user_profile = UserProfile.find_by_id(params[:id])
+    if @user_profile.update(update_params.merge(user: current_user))
+      redirect_to(dashboards_url, notice: 'Your profile has been saved!') and return
+    else
+      # TODO: flash[:error]
+      render :edit, layout: 'edit_profile'
+    end
   end
 
 	def new
-    @user_profile = UserProfile.new({profile_type: :user_profile})
+    @user_profile = UserProfile.new({profile_type: UserProfile.name.underscore})
+    render layout: 'new_profile'
 	end
 
   def create
@@ -20,7 +35,7 @@ class UserProfilesController < ApplicationController
       redirect_to(dashboards_url, notice: 'Your new profile has been created!') and return
     else
       @user_profile = interactor.profile
-      render :new
+      render :new, layout: 'new_profile'
     end
   end
 
@@ -50,6 +65,16 @@ class UserProfilesController < ApplicationController
       :software_developer_profile
     end
     params.require(profile_type).permit(:profile_name, :profile_type, skills_attributes: [:id, :name])
+  end
+
+  def update_params
+    profile_type = if params.has_key? :technical_recruiter_profile
+      :technical_recruiter_profile
+    elsif params.has_key? :software_developer_profile
+      :software_developer_profile
+    end
+    params[profile_type][:skills_attributes] = {} if params[profile_type][:skills_attributes].nil? 
+    params.require(profile_type).permit(:profile_name, :type, skills_attributes: [:id, :name])
   end
 
   def destroy_params

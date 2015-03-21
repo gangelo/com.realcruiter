@@ -22,13 +22,13 @@
   <% end %>
 
   <%= content_tag :div, class: f.validation_class(:profile_type, 'form-group form-group-lg') do %>
-    <%= label_tag :software_developer_profile, class: 'input-lg radio-inline' do %>
-      <%= radio_button_tag :profile_type, 'software_developer_profile', false %>
+    <%= label_tag SoftwareDeveloperProfile.name.underscore.to_sym, class: 'input-lg radio-inline' do %>
+      <%= radio_button_tag :Profile_type, SoftwareDeveloperProfile.name.underscore, false %>
       I'm a Software Developer
     <% end %>
 
-    <%= label_tag :technical_recruiter_profile, class: 'input-lg radio-inline' do %>
-      <%= radio_button_tag :profile_type, 'technical_recruiter_profile', true %>      
+    <%= label_tag TechnicalRecruiterProfile.name.underscore.to_sym, class: 'input-lg radio-inline' do %>
+      <%= radio_button_tag :profile_type, TechnicalRecruiterProfile.name.underscore, true %>      
       I'm a Recruiter
     <% end %>
     <%= f.errors_for :profile_type %>

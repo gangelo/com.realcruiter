@@ -1,0 +1,30 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag 'jquery-ui/autocomplete' %>
+  <%= javascript_include_tag 'jquery-ui/autocomplete' %>
+  <%= javascript_include_tag 'skill-search' %>
+  <%= javascript_include_tag 'skill-helpers' %>
+  <%= javascript_include_tag 'create-profile' %>
+  <%= javascript_include_tag 'modal-dialog-center' %>
+<% end %>
+
+<%= render template: 'layouts/application.html.erb' %>
+
+<div class='container'>
+  <% if content_for? :page_tab %>
+    <div class='row'>
+      <div class='col-lg-12'>
+        <%= yield :page_tab %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if content_for? :profile_form %>
+    <div class='row'>
+      <div class='col-lg-8'>
+        <%= yield :profile_form %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= render partial: 'shared/modal_dialog' %>

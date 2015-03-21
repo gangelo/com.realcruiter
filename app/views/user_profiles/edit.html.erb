@@ -1,0 +1,7 @@
+<% content_for :page_tab do %>
+  <%= render partial: 'shared/page_header', object: 'Edit Profile' %>
+<% end %>
+
+<% content_for :profile_form do %>
+  <%= render partial: 'shared/profile_form', locals: { mode: :edit } %>
+<% end %>
