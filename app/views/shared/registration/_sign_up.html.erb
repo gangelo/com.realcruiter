@@ -23,7 +23,7 @@
 
   <%= content_tag :div, class: f.validation_class(:profile_type, 'form-group form-group-lg') do %>
     <%= label_tag SoftwareDeveloperProfile.name.underscore.to_sym, class: 'input-lg radio-inline' do %>
-      <%= radio_button_tag :Profile_type, SoftwareDeveloperProfile.name.underscore, false %>
+      <%= radio_button_tag :profile_type, SoftwareDeveloperProfile.name.underscore, false %>
       I'm a Software Developer
     <% end %>
 

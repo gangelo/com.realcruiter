@@ -14,7 +14,6 @@ class UserProfilesController < ApplicationController
   end
 
   def update
-    #binding.pry
     @user_profile = UserProfile.find_by_id(params[:id])
     if @user_profile.update(update_params.merge(user: current_user))
       redirect_to(dashboards_url, notice: 'Your profile has been saved!') and return
