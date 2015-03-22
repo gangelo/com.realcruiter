@@ -45,12 +45,6 @@ $(function() {
     showModal();
   };
 
-
-  function cleanUp() {
-    $(submitButtonSelector).off('click');
-    $(cancelButtonSelector).off('click');
-  };
-
   function showModal() {
     $('.modal').modal().show();
   };

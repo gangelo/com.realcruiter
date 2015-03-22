@@ -8,7 +8,6 @@ class UserProfilesController < ApplicationController
   end
 
   def edit
-    # TODO: Strong params
     @user_profile = current_user.user_profiles.find(params[:id])
     render layout: 'edit_profile'
   end
