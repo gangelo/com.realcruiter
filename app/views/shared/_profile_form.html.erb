@@ -61,7 +61,11 @@ edit_mode = local_assigns.fetch(:mode) == :edit
   <% end %>
 
   <div class='form-group form-group-lg'>
-    <span class='instructions'>Click the <i>Create</i> button below to create a new profile.</span>
+      <%
+      button_name = edit_mode ? 'Save' : 'Create'
+      instructions = "Click the <i>#{button_name}</i> button below to create a new profile." 
+      %>
+      <span class='instructions'><%= instructions.html_safe %></span>
   </div>
 
   <%= content_tag :div, class: "form-group form-group-lg tall" do %>  
