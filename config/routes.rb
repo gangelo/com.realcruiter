@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :user_profiles, path: :profiles, as: :profiles
   
   get '/dashboards', to: 'dashboards#index'
+  get '/search', to: 'search#index'
 
   devise_for :users, controllers: { registrations: :registrations }
   root 'home#index'
