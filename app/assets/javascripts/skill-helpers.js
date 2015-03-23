@@ -58,7 +58,6 @@ Realcruiter.SkillHelpers = {
     },
 
     _addSkill : function(skill) {
-      skill = skill.toLowerCase();
       var index = Realcruiter.SkillHelpers.SkillsWidget.skillCount();
 
       var button = $("<button type='button' class='btn btn-lg btn-skill'/>").append("<i class='fa fa-times fa-lg'></i>&nbsp;").last().append($('<span />').text(skill));
@@ -70,12 +69,12 @@ Realcruiter.SkillHelpers = {
 
     _buildElementId : function(index, skill_property) {
       var userProfileType = Realcruiter.SkillHelpers.SkillsWidget._userProfileType;
-      return userProfileType + "_skills_attributes_" + index + "_" + skill_property;
+      return userProfileType + "_all_skills_attributes_" + index + "_" + skill_property;
     },
 
     _buildElementName : function(index, skill_property) {
       var userProfileType = Realcruiter.SkillHelpers.SkillsWidget._userProfileType;
-      return userProfileType + "[skills_attributes][" + index + "][" + skill_property + "]";
+      return userProfileType + "[all_skills_attributes][" + index + "][" + skill_property + "]";
     },
 
     _resyncSkills : function() {

@@ -43,9 +43,8 @@ edit_mode = local_assigns.fetch(:mode) == :edit
         </span>
       <% end %>
 
-      <!-- TODO: Move to InlineErrorsBuilder - start /-->
       <%= content_tag :div, class: 'form-group-lg panel skills-container', style: 'min-height:250px;' do %>
-        <%= f.fields_for :skills do | f | %>
+        <%= f.fields_for :all_skills, @all_skills do | f | %>
           <%= content_tag :span do %>
             <%= f.button :name, type: :button, class: 'btn btn-lg btn-skill' do %>
               <i class='fa fa-times fa-lg'></i>&nbsp;<%= f.object.name %>
@@ -55,8 +54,6 @@ edit_mode = local_assigns.fetch(:mode) == :edit
           <% end %>
         <% end %>
       <% end %>
-      <!-- TODO: Move to InlineErrorsBuilder - end /-->
-      
     </div>
   <% end %>
 

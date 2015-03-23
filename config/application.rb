@@ -23,6 +23,7 @@ module ComRealcruiter
     # Load our lib path, so that classes like CustomFailure are available 
     # to our app.
     config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W(#{config.root}/app/modules)
   end
 end
 

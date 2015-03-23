@@ -62,7 +62,7 @@ class UserProfilesController < ApplicationController
     elsif params.has_key? :software_developer_profile
       :software_developer_profile
     end
-    params.require(profile_type).permit(:profile_name, :profile_type, skills_attributes: [:id, :name])
+    params.require(profile_type).permit(:profile_name, :profile_type, all_skills_attributes: [:id, :name])
   end
 
   def update_params
@@ -71,8 +71,9 @@ class UserProfilesController < ApplicationController
     elsif params.has_key? :software_developer_profile
       :software_developer_profile
     end
-    params[profile_type][:skills_attributes] = {} if params[profile_type][:skills_attributes].nil? 
-    params.require(profile_type).permit(:profile_name, :type, skills_attributes: [:id, :name])
+   
+    params[profile_type][:all_skills_attributes] = {} if params[profile_type][:all_skills_attributes].nil? 
+    params.require(profile_type).permit(:profile_name, :type, all_skills_attributes: [:id, :name])
   end
 
   def destroy_params
