@@ -10,8 +10,8 @@
   <tbody>
     <% user_profiles.each do | profile | %>
     <tr>
-      <%= content_tag :td, profile.profile_name %>
-      <%= content_tag :td do %>
+      <%= content_tag :td, profile.profile_name, class: 'ellipsis', style: 'max-width:200px;width:33%;' %>
+      <%= content_tag :td, style: 'width:33%;' do %>
         <% css_class = profile.type.match(/recruiter/i) ? 'label-success' : 'label-primary' %>
         <span class='label <%=css_class %>'><%= profile.type.titleize %></span>
       <% end %>
