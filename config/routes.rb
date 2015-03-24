@@ -4,7 +4,10 @@ Rails.application.routes.draw do
   resources :user_profiles, path: :profiles, as: :profiles
   
   get '/dashboards', to: 'dashboards#index'
+
   get '/search', to: 'search#index'
+  post '/search', to: 'search#search'
+  get '/search/skills.json', to: 'search#skills', as: :search_skills
 
   devise_for :users, controllers: { registrations: :registrations }
   root 'home#index'
