@@ -24,7 +24,8 @@ class SearchController < ApplicationController
   private
 
   def search_params
-    params.require(:search_criteria).permit(:search_string)
+    params[:search_criteria][:search_skills_attributes] ||= {}
+    params.require(:search_criteria).permit(:search_string, search_skills_attributes: [:id, :skill_name, :skill_valid])
   end
 
   def skills_search_params

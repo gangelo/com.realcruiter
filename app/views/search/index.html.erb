@@ -1,6 +1,8 @@
-<%= stylesheet_link_tag 'jquery-ui/autocomplete' %>
-<%= javascript_include_tag 'jquery-ui/autocomplete' %>
-<%= javascript_include_tag 'skills-search.js' %>
+<% content_for :head do %>
+  <%= stylesheet_link_tag 'jquery-ui/autocomplete' %>
+  <%= javascript_include_tag 'jquery-ui/autocomplete' %>
+  <%= javascript_include_tag 'skills-search.js' %>
+<% end %>
 
 <div class='container'>
   <div class='row'>
@@ -30,5 +32,36 @@
         <%= button_tag 'Clear', class: 'btn btn-lg btn-default btn-cancel dark pull-right', style: 'width:48%;', onclick: 'return false;' %>
       </div>
     </div>
+
+    <div class='row'>
+      <div class='col-lg-12'>
+          <%= content_tag :div, class: 'form-group-lg panel skills-container' do %>
+            <%= f.fields_for :search_skills, @search_criteria.search_skills do |f| %>
+              <%= content_tag :span do %>
+                <%= f.button :name, type: :button, class: 'btn btn-lg btn-skill' do %>
+                  <i class='fa fa-times fa-lg'></i>&nbsp;<%= f.object.skill_name %>
+                <% end %>
+                <%= f.hidden_field :skill_name, class: 'btn-skill-name' %>
+              <% end %>
+            <% end %>
+          <% end %>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col-lg-3'>
+          User id.
+      </div>
+      <div class='col-lg-3'>
+          Profile.
+      </div>
+      <div class='col-lg-3'>
+          Skills.
+      </div>
+      <div class='col-lg-3'>
+          Rate/Options.
+      </div>
+    </div>
+    
   <% end %>
 </div>

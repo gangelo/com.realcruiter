@@ -28,6 +28,7 @@ class UserProfilesController < ApplicationController
 	end
 
   def create
+    binding.pry
     interactor = ProfileCreator.new(create_params, current_user)
     if interactor.execute
       redirect_to(dashboards_url, notice: 'Your new profile has been created!') and return
@@ -72,7 +73,7 @@ class UserProfilesController < ApplicationController
       :software_developer_profile
     end
    
-    params[profile_type][:all_skills_attributes] = {} if params[profile_type][:all_skills_attributes].nil? 
+    params[profile_type][:all_skills_attributes] ||= {} 
     params.require(profile_type).permit(:profile_name, :type, all_skills_attributes: [:id, :name])
   end
 
