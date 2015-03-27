@@ -20,12 +20,4 @@ class SearchSkill
   def attributes
     { 'skill_name' => @skill_name, 'skill_valid?' => @skill_valid }
   end
-
-  def persisted?
-    false
-  end
- 
-  def id
-    nil
-  end
 end

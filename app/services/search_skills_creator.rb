@@ -11,9 +11,9 @@ class SearchSkillsCreator
 
   def execute(&block)
     skills = []
-
+    
     tokenize_search_string(@search_string).each do |name|
-      search_skill = create_search_skill(name)
+      search_skill = create_skill(name)
       yield search_skill if block_given?
       skills << search_skill
     end
@@ -23,7 +23,7 @@ class SearchSkillsCreator
 
   private
 
-  def create_search_skill(skill_name) 
+  def create_skill(skill_name) 
     search_skill = validate_skill(SearchSkill.new(skill_name: skill_name))
   end
 
