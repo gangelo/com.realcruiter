@@ -1,8 +1,7 @@
 <% if flash.any? %>
-  <% if flash[:alert] %>
-    <%= render partial: 'shared/flash_alert', locals: { message_header: "Oh snap!" } %>
-  <% end %>
   <% if flash[:notice] %>
-    <%= render partial: 'shared/flash_notice', locals: { message_header: "Yippie!" } %>
+    <%= render partial: 'shared/flash_notice', locals: { message_header: 'Yippie!' } %>
+  <% elsif flash[:alert] %>
+    <%= render partial: 'shared/flash_alert', locals: { message_header: 'Oh snap!' } %>
   <% end %>
 <% end %>

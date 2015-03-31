@@ -6,7 +6,7 @@ class UserProfile < ActiveRecord::Base
   has_many :user_profile_skills
   has_many :skills, through: :user_profile_skills
 
-  has_many :custom_skills
+  has_many :custom_skills, dependent: :delete_all
 
   def all_skills
     (self.skills + self.custom_skills).sort_by{|skill| skill[:name]}

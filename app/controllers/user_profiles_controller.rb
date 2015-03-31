@@ -7,6 +7,21 @@ class UserProfilesController < ApplicationController
     @user_profiles = UserProfile.where(user_id: current_user.id).order(:profile_name)
   end
 
+  def new
+    @user_profile = UserProfile.new({profile_type: UserProfile.name.underscore})
+    render layout: 'new_profile'
+  end
+
+  def create
+    interactor = ProfileCreator.new(create_params, current_user)
+    if interactor.execute
+      redirect_to(dashboards_url, notice: 'Your new profile has been created!')
+    else
+      @user_profile = interactor.profile
+      render :new, layout: 'new_profile'
+    end
+  end
+
   def edit
     @user_profile = current_user.user_profiles.find(params[:id])
     render layout: 'edit_profile'
@@ -15,32 +30,23 @@ class UserProfilesController < ApplicationController
   def update
     @user_profile = UserProfile.find_by_id(params[:id])
     if @user_profile.update(update_params.merge(user: current_user))
-      redirect_to(dashboards_url, notice: 'Your profile has been saved!') and return
+      redirect_to(dashboards_url, notice: 'Your profile has been saved!')
     else
-      # TODO: flash[:error]
+      flash[:alert] = 'Unable to update profile'
       render :edit, layout: 'edit_profile'
     end
   end
 
-	def new
-    @user_profile = UserProfile.new({profile_type: UserProfile.name.underscore})
-    render layout: 'new_profile'
-	end
-
-  def create
-    binding.pry
-    interactor = ProfileCreator.new(create_params, current_user)
-    if interactor.execute
-      redirect_to(dashboards_url, notice: 'Your new profile has been created!') and return
-    else
-      @user_profile = interactor.profile
-      render :new, layout: 'new_profile'
-    end
-  end
-
   def destroy
-    current_user.user_profiles.find(destroy_params).delete
-    redirect_to profiles_url, notice: 'Profile deleted'
+    begin
+      UserProfile.find(destroy_params).destroy
+      redirect_to profiles_url, notice: 'Profile deleted'
+    rescue ActiveRecord::RecordNotFound
+      alert = 'That profile no longer exists'
+    rescue
+      alert = "That profile couldn't be deleted for some reason. Give it another try later."
+    end
+    redirect_to(profiles_url, alert: alert)
   end
 
   def skills
