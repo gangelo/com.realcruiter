@@ -36,7 +36,7 @@ class UserProfilesController < ApplicationController
       render :edit, layout: 'edit_profile'
     end
   end
-
+  
   def destroy
     begin
       UserProfile.find(destroy_params).destroy
@@ -54,7 +54,7 @@ class UserProfilesController < ApplicationController
     respond_to do |format|
       format.html
       format.json { 
-        render json: @skills.map(&:name)
+        render json: @skills.pluck(:name)
       }
     end
   end

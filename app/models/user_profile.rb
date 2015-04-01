@@ -1,12 +1,15 @@
 require 'skills_creator'
+require 'model_helpers_sql_builders'
 
 class UserProfile < ActiveRecord::Base
-  belongs_to :user
+  include ModelHelpers::SqlBuilders
+
+  belongs_to :user, inverse_of: :user_profiles
 
   has_many :user_profile_skills
   has_many :skills, through: :user_profile_skills
 
-  has_many :custom_skills, dependent: :delete_all
+  has_many :custom_skills, inverse_of: :user_profile
 
   def all_skills
     (self.skills + self.custom_skills).sort_by{|skill| skill[:name]}
@@ -22,6 +25,12 @@ class UserProfile < ActiveRecord::Base
   validates_presence_of :profile_type, on: :create
 
   attr_accessor :profile_type
+  #alias_attribute :profile_type, :type
+
+  def self.profiles_having_skills(skills)
+    where_clause = build_sql_where_clause(:skills, :name, skills)
+    UserProfile.all.joins(:skills).where(where_clause)
+  end
 
   private
 
