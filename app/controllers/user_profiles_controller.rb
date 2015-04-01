@@ -36,11 +36,11 @@ class UserProfilesController < ApplicationController
       render :edit, layout: 'edit_profile'
     end
   end
-  
+
   def destroy
     begin
       UserProfile.find(destroy_params).destroy
-      redirect_to profiles_url, notice: 'Profile deleted'
+      redirect_to profiles_url, notice: 'Profile deleted' and return
     rescue ActiveRecord::RecordNotFound
       alert = 'That profile no longer exists'
     rescue
