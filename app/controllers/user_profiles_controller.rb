@@ -28,7 +28,6 @@ class UserProfilesController < ApplicationController
 	end
 
   def create
-    binding.pry
     interactor = ProfileCreator.new(create_params, current_user)
     if interactor.execute
       redirect_to(dashboards_url, notice: 'Your new profile has been created!') and return
@@ -48,7 +47,7 @@ class UserProfilesController < ApplicationController
     respond_to do |format|
       format.html
       format.json { 
-        render json: @skills.map(&:name)
+        render json: @skills.pluck(:name)
       }
     end
   end

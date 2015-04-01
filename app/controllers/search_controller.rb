@@ -16,7 +16,7 @@ class SearchController < ApplicationController
     respond_to do |format|
       format.html
       format.json { 
-        render json: @skills.map(&:name)
+        render json: @skills.pluck(:name)
       }
     end
   end
