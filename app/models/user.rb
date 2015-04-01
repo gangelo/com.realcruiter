@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  has_many :user_profiles
+  has_many :user_profiles, inverse_of: :user
 
   validates_presence_of :password_confirmation
 end
