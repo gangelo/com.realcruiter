@@ -19,7 +19,7 @@ class ProfileCreator
 	end
 
 	def profile_class
-		@params.fetch(:profile_type, 'UserProfile').classify.constantize
+		@params.fetch(:type, UserProfile.name).classify.constantize
 	end
 
 	def valid_profile_class?

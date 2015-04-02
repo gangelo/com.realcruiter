@@ -8,7 +8,7 @@ class UserProfilesController < ApplicationController
   end
 
   def new
-    @user_profile = UserProfile.new({profile_type: UserProfile.name.underscore})
+    @user_profile = UserProfile.new
     render layout: 'new_profile'
   end
 
@@ -32,7 +32,7 @@ class UserProfilesController < ApplicationController
     if @user_profile.update(update_params.merge(user: current_user))
       redirect_to(dashboards_url, notice: 'Your profile has been saved!')
     else
-      flash[:alert] = 'Unable to update profile'
+      flash[:alert] = 'Unable to update profile' unless @user_profile.errors.any?
       render :edit, layout: 'edit_profile'
     end
   end
@@ -69,7 +69,7 @@ class UserProfilesController < ApplicationController
     elsif params.has_key? :software_developer_profile
       :software_developer_profile
     end
-    params.require(profile_type).permit(:profile_name, :profile_type, all_skills_attributes: [:id, :name])
+    params.require(profile_type).permit(:profile_name, :type, all_skills_attributes: [:id, :name])
   end
 
   def update_params

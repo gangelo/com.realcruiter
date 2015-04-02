@@ -11,6 +11,10 @@ class UserProfile < ActiveRecord::Base
 
   has_many :custom_skills, inverse_of: :user_profile, dependent: :delete_all
 
+  def initialize(hash={})   
+    super defaults_merge(hash)
+  end
+
   def all_skills
     (self.skills + self.custom_skills).sort_by{|skill| skill[:name]}
   end
@@ -22,10 +26,7 @@ class UserProfile < ActiveRecord::Base
   validates_uniqueness_of :profile_name, case_sensitive: false, scope: [:user_id, :type]
   validates_presence_of :profile_name
 
-  validates_presence_of :profile_type, on: :create
-
-  attr_accessor :profile_type
-  #alias_attribute :profile_type, :type
+  validates_presence_of :type, on: :create
 
   def self.profiles_having_skills(skills)
     where_clause = build_sql_where_clause(:skills, :name, skills)
@@ -33,6 +34,10 @@ class UserProfile < ActiveRecord::Base
   end
 
   private
+
+  def defaults_merge(hash)
+    {type: self.class}.merge(hash.presence||{})
+  end
 
   def add_all_skills(hash)
     skills.destroy_all unless skills.empty?
