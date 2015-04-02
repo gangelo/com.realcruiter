@@ -2,11 +2,11 @@ require 'ffaker'
 
 namespace :seed do
 desc 'Create test users'
-  task user: :environment do
+  task me: :environment do
     if Skill.count == 0
       puts 'There are no skills in the skills table; run [rake seed:skills]'
     else
-      User.create(email: 'web.gma@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
+      User.create(email: 'me@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
     end
   end
 
