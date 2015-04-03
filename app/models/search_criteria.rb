@@ -4,13 +4,19 @@ require 'model_helpers_transform_to_attributes'
 require 'skills_search_string'
 
 class SearchCriteria
+  extend ActiveModel::Callbacks
+  define_model_callbacks :initialize, only: :after
+
   include ActiveModel::Model
-  include ActiveModel::Serialization
+  include ActiveModel::Validations
   include ActiveModel::Validations::Callbacks
   include ActiveModel::Conversion
+  include ActiveModel::Serialization
 
   include Skills::SearchString
   include ModelHelpers::TransformToAttributes
+
+  after_initialize :action_after_initialize
 
   after_validation :clear_search_string
 
@@ -18,7 +24,15 @@ class SearchCriteria
 
   def initialize(attributes={})
     @search_skills = []
+    @user_profiles = []
     super
+
+    run_callbacks :initialize do
+    end
+  end
+
+  def attributes
+    { 'search_string' => @search_string, 'search_skills' => transform_to_attributes(@search_skills) }
   end
 
   def search_string
@@ -49,12 +63,25 @@ class SearchCriteria
     @search_skills.sort! { |a, b| a.skill_name <=> b.skill_name }
   end
 
-  def attributes
-    { 'search_string' => @search_string, 'search_skills' => transform_to_attributes(@search_skills) }
+  def user_profiles
+    @user_profiles
+  end
+
+  def user_profiles_attributes=(attributes)
+  end
+
+  def valid_search_skills
+    @search_skills.reject{|skill| !skill.skill_valid}.map {|skill| skill.skill_name}
   end
 
   def has_search_skills?
     @search_skills.any?
+  end
+
+  protected
+
+  def action_after_initialize
+    @user_profiles = UserProfile.find_by_skills(valid_search_skills) if has_search_skills?
   end
 
   private

@@ -56,18 +56,9 @@
     </div>
 
     <div class='row'>
-      <div class='col-lg-3'>
-          User id.
-      </div>
-      <div class='col-lg-3'>
-          Profile.
-      </div>
-      <div class='col-lg-3'>
-          Skills.
-      </div>
-      <div class='col-lg-3'>
-          Rate/Options.
-      </div>
+      <div class='col-lg-12'>
+        <%= render partial: 'shared/search_results', object: @search_criteria.user_profiles, as: :user_profiles %>
+     </div>
     </div>
     
   <% end %>

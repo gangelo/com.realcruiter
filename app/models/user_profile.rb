@@ -28,7 +28,7 @@ class UserProfile < ActiveRecord::Base
 
   validates_presence_of :type, on: :create
 
-  def self.profiles_having_skills(skills)
+  def self.find_by_skills(skills)
     where_clause = build_sql_where_clause(:skills, :name, skills)
     UserProfile.all.joins(:skills).where(where_clause)
   end

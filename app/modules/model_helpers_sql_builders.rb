@@ -12,11 +12,15 @@ module ModelHelpers
         column = column.to_s if column.instance_of? Symbol
         values = [values].flatten unless values.instance_of? Array
 
+        where_clause = []
+
         values.each_with_index.map do |value,index| 
-          clause = "#{table}.#{column} = '#{value}'"
+          clause = "lower(#{table}.#{column}) = lower('#{value}')"
           clause = "AND #{clause}" unless index == 0
-          clause
+          where_clause << clause
         end
+
+        where_clause.join(' ')
       end
     end
   end
