@@ -43,11 +43,17 @@ desc 'Create test users'
   def get_random_skills(&block)
     skills = []
 
+    if rand(2) == 1
+      skill = Skill.where(name: 'Ruby')
+      yield skill if block_given?
+      skills << skill
+    end
+
     skill_count = Skill.count
     rand(25).times do
-      skill = Skill.find(rand(skill_count))
+      skill = Skill.find(rand(1..skill_count))
       next if skills.include? skill
-      yield skill
+      yield skill if block_given?
       skills << skill
     end
 
