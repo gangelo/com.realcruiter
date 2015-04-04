@@ -33,6 +33,8 @@ gem 'twitter-bootstrap-rails'
 # For authentication.
 gem 'devise', '~> 3.4.1'
 
+gem 'will_paginate', '~> 3.0.7'
+
 group :development, :test do
   # Using RSpec and/or Capybara as opposed to MiniTest, fails to clean our database during testing.
   gem 'database_cleaner', '~> 1.3.0'
