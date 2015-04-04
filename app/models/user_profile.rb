@@ -30,7 +30,11 @@ class UserProfile < ActiveRecord::Base
 
   def self.find_by_skills(skills)
     where_clause = build_sql_where_clause(:skills, :name, skills)
-    UserProfile.all.joins(:skills).where(where_clause)
+    UserProfile.joins(:skills).where(where_clause)
+  end
+
+  def self.find_by_skills_with_paginate(skills, paginate_params={page: nil, per_page: nil})
+    find_by_skills(skills).paginate(page: paginate_params[:page], per_page: paginate_params[:per_page])
   end
 
   private
