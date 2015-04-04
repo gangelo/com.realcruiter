@@ -1,5 +1,6 @@
 require 'search_skill'
 require 'search_skills_creator'
+require 'model_helpers_pagination'
 require 'model_helpers_transform_to_attributes'
 require 'skills_search_string'
 
@@ -15,6 +16,7 @@ class SearchCriteria
 
   include Skills::SearchString
   include ModelHelpers::TransformToAttributes
+  include ModelHelpers::Pagination
 
   after_initialize :action_after_initialize
 
@@ -24,7 +26,7 @@ class SearchCriteria
 
   def initialize(attributes={})
     @search_skills = []
-    @user_profiles = []
+    @user_profiles = UserProfile.none
     super
 
     run_callbacks :initialize do
@@ -68,6 +70,7 @@ class SearchCriteria
   end
 
   def user_profiles_attributes=(attributes)
+    # Not needed, except to get fields_for in views.
   end
 
   def valid_search_skills
@@ -81,7 +84,7 @@ class SearchCriteria
   protected
 
   def action_after_initialize
-    @user_profiles = UserProfile.find_by_skills(valid_search_skills) if has_search_skills?
+    @user_profiles = has_search_skills? ? UserProfile.find_by_skills_with_paginate(valid_search_skills, paginate_params) : @user_profiles.paginate(paginate_params)
   end
 
   private
