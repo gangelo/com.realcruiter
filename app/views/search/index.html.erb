@@ -60,6 +60,12 @@
         <%= render partial: 'shared/search_results', object: @search_criteria.user_profiles, as: :user_profiles %>
      </div>
     </div>
+
+    <div class='row'>
+      <div class='col-lg-12'>
+        <%= will_paginate @search_criteria.user_profiles %>
+     </div>
+    </div>
     
   <% end %>
 </div>
