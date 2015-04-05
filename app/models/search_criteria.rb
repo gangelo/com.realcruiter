@@ -29,6 +29,8 @@ class SearchCriteria
     @user_profiles = UserProfile.none
     super
 
+    self.class.default_paginate_per_page = 20
+
     run_callbacks :initialize do
     end
   end
