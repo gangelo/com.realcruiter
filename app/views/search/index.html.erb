@@ -21,9 +21,9 @@
 
 <div class='container'>
   <%= form_for @search_criteria, 
-                      url: search_path,
+                      url: search_search_path,
                       builder: InlineErrorsBuilder,
-                      method: :POST,
+                      method: :GET,
                       role: :form do |f| %>
     <div class='row'>
       <div class='col-lg-8'>     

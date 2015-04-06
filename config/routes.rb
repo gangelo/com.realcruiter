@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get '/dashboards', to: 'dashboards#index'
 
   get '/search', to: 'search#index'
-  post '/search', to: 'search#search'
+  get '/search/search', to: 'search#search'
   get '/search/skills.json', to: 'search#skills', as: :search_skills
 
   devise_for :users, controllers: { registrations: :registrations }
