@@ -29,8 +29,13 @@ class UserProfile < ActiveRecord::Base
   validates_presence_of :type, on: :create
 
   def self.find_by_skills(skills)
-    where_clause = build_sql_where_clause(:skills, :name, skills)
-    UserProfile.joins(:skills).where(where_clause)
+    return Skill.none unless skills.presence
+
+    in_clause = build_sql_in_clause(:skills, :name, skills)
+    UserProfile.joins(:skills).where(in_clause)
+      .group('user_profiles.id')
+      .having("COUNT(user_profiles.id) >= ? AND COUNT(user_profiles.id) <= ?", from_count(skills.count), skills.count)
+      .order("COUNT(user_profiles.id) DESC, user_profiles.id")
   end
 
   def self.find_by_skills_with_paginate(skills, paginate_params={page: nil, per_page: nil})
@@ -38,6 +43,21 @@ class UserProfile < ActiveRecord::Base
   end
 
   private
+
+  def self.from_count(count)
+    from = count / 2
+    return count if from == 0
+    max(2, half(count))
+  end
+
+  def self.half(count)
+    half = count / 2
+    half > 1 ? half : 1
+  end
+
+  def self.max(num1, num2)
+    num1 > num2 ? num1 : num2
+  end
 
   def defaults_merge(hash)
     {type: self.class}.merge(hash.presence||{})
