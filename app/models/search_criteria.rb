@@ -29,14 +29,14 @@ class SearchCriteria
     @user_profiles = UserProfile.none
     super
 
-    self.class.default_paginate_per_page = 20
+    self.class.default_per_page = 20
 
     run_callbacks :initialize do
     end
   end
 
   def attributes
-    { 'search_string' => @search_string, 'search_skills' => transform_to_attributes(@search_skills) }
+    { 'search_string' => @search_string, 'search_skills' => transform_to_attributes(@search_skills), 'page' => paginate_params[:page], 'per_page' => paginate_params[:per_page] }
   end
 
   def search_string
