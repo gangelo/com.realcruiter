@@ -34,6 +34,7 @@ gem 'twitter-bootstrap-rails'
 gem 'devise', '~> 3.4.1'
 
 gem 'will_paginate', '~> 3.0.7'
+gem 'bootstrap-will_paginate', '~> 0.0.10'
 
 group :development, :test do
   # Using RSpec and/or Capybara as opposed to MiniTest, fails to clean our database during testing.
