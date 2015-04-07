@@ -7,22 +7,33 @@ module ModelHelpers
     public
 
     module ClassMethods
-      def default_paginate_per_page
-        @@default_paginate_per_page ||= 25
+      def default_per_page
+        @@default_per_page ||= 25
       end
 
-      def default_paginate_per_page=(value)
-        @@default_paginate_per_page = value
+      def default_per_page=(value)
+        @@default_per_page = value
       end
     end # ClassMethods
 
-    protected
-
-    attr_accessor :paginate_page
-    attr_accessor :paginate_per_page
-
     def paginate_params
-      {page: @paginate_page.presence || 1, per_page: @paginate_per_page.presence || self.class.default_paginate_per_page}
+      {page: page, per_page: per_page}
+    end
+
+    def page
+      @ppage.presence || 1
+    end
+
+    def page=(value)
+      @ppage = value
+    end
+
+    def per_page
+      @per_page.presence || self.class.default_per_page
+    end
+
+    def per_page=(value)
+      @per_page = value
     end
 
   end
