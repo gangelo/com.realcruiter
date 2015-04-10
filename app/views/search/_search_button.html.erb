@@ -1,0 +1,16 @@
+<div class='btn-group' style='width:48%'>
+  <%= button_tag type: :submit, class: 'btn btn-lg btn-special dark pull-left', style: 'width:80%;' do %>
+    <i class='fa fa-search fa-lg pull-left'></i>Search
+  <% end %>
+  <button type='button' class='btn btn-lg btn-special dark pull-left dropdown-toggle', style='width:20%;', data-toggle='dropdown' aria-expanded='false'>
+    <span class='caret'></span>
+    <span class='sr-only'>Profiles Dropdown</span>
+  </button>
+  
+  <ul class='dropdown-menu' style='min-width:100%;' role='menu'>
+    <% current_user.user_profiles.each do |profile| %>
+      <li><a href='#'><%= render partial: 'shared/profile_type_label', locals: { profile_type: profile.type, profile_text: profile.profile_name } %></a></li>
+    <% end %>
+  </ul>
+  
+</div>
