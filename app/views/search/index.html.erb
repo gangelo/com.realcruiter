@@ -56,9 +56,7 @@
     </div>
 
     <div class='row'>
-      <div class='col-lg-8' style='margin:0 auto;float:none;'>
-        <%= will_paginate @search_criteria.user_profiles, previous_label: '<i class="fa fa-lg fa-chevron-circle-left"></i>', next_label: '<i class="fa fa-lg fa-chevron-circle-right"></i>' %>
-     </div>
+        <%= render partial: 'shared/pager', object: @search_criteria.user_profiles, as: :pager_data %>
     </div>
 
     <div class='row'>
@@ -68,9 +66,7 @@
     </div>
 
     <div class='row'>
-      <div class='col-lg-8' style='margin:0 auto;float:none;'>
-        <%= will_paginate @search_criteria.user_profiles, previous_label: '<i class="fa fa-lg fa-chevron-circle-left"></i>', next_label: '<i class="fa fa-lg fa-chevron-circle-right"></i>' %>
-     </div>
+      <%= render partial: 'shared/pager', object: @search_criteria.user_profiles, as: :pager_data %>
     </div>
     
   <% end %>
