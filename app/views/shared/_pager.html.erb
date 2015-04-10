@@ -1,1 +1,5 @@
-<%= will_paginate pager_data, class: 'col-lg-6 col-lg-offset-3 pager-center', previous_label: '<i class="fa fa-2x fa-chevron-circle-left"></i>', next_label: '<i class="fa fa-2x fa-chevron-circle-right"></i>' %>
+<%
+css_class = local_assigns.fetch(:css_class, '')
+%>
+
+<%= will_paginate pager_data, class: css_class, previous_label: '<i class="fa fa-2x fa-chevron-circle-left"></i>', next_label: '<i class="fa fa-2x fa-chevron-circle-right"></i>' %>
