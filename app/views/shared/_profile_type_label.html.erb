@@ -1,0 +1,7 @@
+<%
+profile_type = local_assigns.fetch(:profile_type, '')
+profile_text = local_assigns.fetch(:profile_text, profile_type.titleize)
+%>
+
+<% css_class = profile_type.match(/recruiter/i) ? 'label-success' : 'label-primary' %>
+<span class='label <%=css_class %>'><%= profile_text %></span>
