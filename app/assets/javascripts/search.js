@@ -1,4 +1,3 @@
-
 $(function() {
   $('ul.dropdown-menu').on('click', 'li>a.profile-search-link', function() {
     var profileId = $(this).data('profile-id');
