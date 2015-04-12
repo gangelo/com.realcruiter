@@ -1,4 +1,4 @@
-module ApplicationHelper
+ module ApplicationHelper
   # Returns the authenticated user if one is logged in, or a blank new user if not.
   #
   def resource

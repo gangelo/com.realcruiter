@@ -9,8 +9,7 @@
   
   <ul class='dropdown-menu' style='min-width:100%;' role='menu'>
     <% current_user.user_profiles.each do |profile| %>
-      <li><a href='#'><%= render partial: 'shared/profile_type_label', locals: { profile_type: profile.type, profile_text: profile.profile_name } %></a></li>
+      <li><a href='#' class='profile-search-link' data-profile-id='<%= profile.id %>'><%= render partial: 'shared/profile_type_label', locals: { profile_type: profile.type, profile_text: profile.profile_name } %></a></li>
     <% end %>
   </ul>
-  
 </div>

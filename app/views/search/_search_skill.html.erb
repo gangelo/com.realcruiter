@@ -1,0 +1,13 @@
+<%
+def build_name(property_name, index)
+  "search_criteria[search_skills_attributes][#{index}][#{property_name}]"
+end
+%>
+
+ <%= content_tag :span do %>
+  <%= button_tag type: :button, class: "btn btn-lg btn-skill btn-skill-valid-#{search_skill.skill_valid}" do %>
+    <%= content_tag :i, nil, class: "fa fa-times fa-lg btn-skill-valid-#{search_skill.skill_valid}" %>&nbsp;<%= search_skill.skill_name %>
+  <% end %>
+  <%= hidden_field_tag build_name('skill_name', search_skill_counter), search_skill.skill_name %>
+  <%= hidden_field_tag build_name('skill_valid', search_skill_counter), search_skill.skill_valid %>
+<% end %>
