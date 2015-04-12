@@ -12,6 +12,12 @@ class UserProfilesController < ApplicationController
     render layout: 'new_profile'
   end
 
+  def show
+    if !@user_profile = UserProfile.find_by_id(show_params)
+      flash[:alert] = 'Unable to find profile'
+    end
+  end
+
   def create
     interactor = ProfileCreator.new(create_params, current_user)
     if interactor.execute
@@ -81,6 +87,10 @@ class UserProfilesController < ApplicationController
    
     params[profile_type][:all_skills_attributes] ||= {} 
     params.require(profile_type).permit(:profile_name, :type, all_skills_attributes: [:id, :name])
+  end
+
+  def show_params
+    params.require(:id)
   end
 
   def destroy_params
