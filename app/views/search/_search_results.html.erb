@@ -10,14 +10,16 @@
     <% user_profiles.each do | profile | %>
     <tr>
       <%= content_tag :td, style: 'width:25%;' do %>
-        <%= content_tag :i, nil, class: 'fa fa-user fa-2x pull-left' %>Anonymous
+        <%= content_tag :i, nil, class: 'fa fa-user fa-lg pull-left' do %>
+          &nbsp;Anonymous
+        <% end %>
       <% end %>
       <%= content_tag :td, style: 'width:50%;' do %>
         <% css_class = profile.type.match(/recruiter/i) ? 'label-success' : 'label-primary' %>
         <%= render partial: 'shared/profile_type_label', locals: { profile_type: profile.type} %>
       <% end %>
       <td>
-        <%= link_to root_path, { class: 'pull-left btn btn-edit transparent', title: 'View profile' } do %>
+        <%= link_to profile_path(profile), { class: 'pull-left btn btn-edit transparent', title: 'View profile' } do %>
           <%= content_tag :i, nil, class: 'fa fa-eye fa-2x' %>
         <% end %>
 
