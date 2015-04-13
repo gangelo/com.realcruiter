@@ -3,7 +3,7 @@
     <tr>
       <th>User</th>
       <th>Profile Type</th>
-      <th>&nbsp;<th/>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -18,16 +18,11 @@
         <% css_class = profile.type.match(/recruiter/i) ? 'label-success' : 'label-primary' %>
         <%= render partial: 'shared/profile_type_label', locals: { profile_type: profile.type} %>
       <% end %>
-      <td>
+      <%= content_tag :td, style: 'width:25%;' do %>
         <%= link_to profile_path(profile), { class: 'pull-left btn btn-edit transparent', title: 'View profile' } do %>
           <%= content_tag :i, nil, class: 'fa fa-eye fa-2x' %>
         <% end %>
-
-        <%= button_to root_path, { class: 'btn btn-edit transparent', title: 'Request to connect', data: { profile_name: "#{profile.profile_name}" } } do %>
-          <%= content_tag :i, nil, class: 'fa fa-link fa-2x' %>
-          <%= hidden_field_tag :profile_id, profile.id %>
-        <% end %>
-      </td>
+      <% end %>
     </tr>
     <% end %>
   </tbody>
