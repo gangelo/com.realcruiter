@@ -19,6 +19,8 @@ Rails.application.config.assets.precompile += %w(
   search.css 
   user_profiles.js
   user_profiles.css
+
+  user_profiles_show.js
 )
 
 #

@@ -12,12 +12,6 @@ class UserProfilesController < ApplicationController
     render layout: 'new_profile'
   end
 
-  def show
-    if !@user_profile = UserProfile.find_by_id(show_params)
-      flash[:alert] = 'Unable to find profile'
-    end
-  end
-
   def create
     interactor = ProfileCreator.new(create_params, current_user)
     if interactor.execute
@@ -25,6 +19,12 @@ class UserProfilesController < ApplicationController
     else
       @user_profile = interactor.profile
       render :new, layout: 'new_profile'
+    end
+  end
+
+  def show
+    if !@user_profile = UserProfile.find_by_id(show_params)
+      flash[:alert] = 'Unable to find profile'
     end
   end
 

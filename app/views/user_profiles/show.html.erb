@@ -1,4 +1,6 @@
 <% content_for :head do %>
+  <%= javascript_include_tag 'modal-dialog-center' %>
+  <%= javascript_include_tag 'user_profiles_show.js' %>
 <% end %>
 
 <div class='container'>
@@ -11,7 +13,7 @@
 
   <div class='row'>
     <div class='col-lg-12'>
-        <form class='form-horizontal input-lg'>
+        <%= form_tag class: 'form-horizontal input-lg'>
 
           <div class='form-group'>
             <label class='col-lg-2 control-label'>Name</label>
@@ -75,8 +77,10 @@
           <% end %>
         </div>
 
-        </form>
+        <% end %>
       </div>
     </div>
 
 </div>
+
+<%= render partial: 'shared/modal_dialog' %>
