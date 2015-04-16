@@ -1,7 +1,7 @@
 require 'request_to_connect_creator'
 
 class ConnectionsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:request_show, :request_accept, :request_reject]
 
   def create
     if current_user.connect_request_already_exists?(create_params[:user_id], create_params[:user_profile_id])
