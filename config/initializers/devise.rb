@@ -10,10 +10,10 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'do-not-reply@realcruiter.com'
+  config.mailer_sender = 'Realcruiter.com<do-not-reply@realcruiter.com>'
 
   # Configure the class responsible to send e-mails.
-  # config.mailer = 'Devise::Mailer'
+  config.mailer = 'AppMailer'
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and

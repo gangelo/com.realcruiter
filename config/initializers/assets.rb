@@ -11,6 +11,8 @@ Rails.application.config.assets.version = '1.0'
 #
 # Controller assets
 Rails.application.config.assets.precompile += %w( 
+  connections.js
+  connections.css
   dashboards.js
   dashboards.css
   home.css
@@ -19,7 +21,6 @@ Rails.application.config.assets.precompile += %w(
   search.css 
   user_profiles.js
   user_profiles.css
-
   user_profiles_show.js
 )
 

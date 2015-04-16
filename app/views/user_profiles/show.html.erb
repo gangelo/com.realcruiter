@@ -13,7 +13,10 @@
 
   <div class='row'>
     <div class='col-lg-12'>
-        <%= form_tag class: 'form-horizontal input-lg'>
+        <%= form_tag connections_create_path, method: :post, class: 'form-horizontal input-lg' do %>
+
+          <%= hidden_field_tag :user_id, @user_profile.user_id  %>
+          <%= hidden_field_tag :user_profile_id, @user_profile.id  %>
 
           <div class='form-group'>
             <label class='col-lg-2 control-label'>Name</label>
@@ -56,26 +59,26 @@
             </p>
           </div>
 
-        <div class='form-group form-group-lg'>
-          <div class='col-lg-10 col-md-offset-2'>&nbsp;</div>
-        </div>
-
-        <div class='form-group form-group-lg'>
-          <div class='col-lg-10 col-md-offset-2'>
-            <%
-            button_name = 'Connect'
-            instructions = "Click the <i>#{button_name}</i> button below to request to connect to this user." 
-            %>
-            <span class='instructions'><%= instructions.html_safe %></span>
+          <div class='form-group form-group-lg'>
+            <div class='col-lg-10 col-md-offset-2'>&nbsp;</div>
           </div>
-        </div>
 
-        <div class='form-group form-group-lg'>
-          <%= content_tag :div, class: 'col-lg-10 col-md-offset-2' do %>  
-            <%= link_to 'Cancel', root_path, class: 'btn btn-lg btn-default btn-cancel form-control', style: 'min-width:auto;max-width:25%;' %>
-            <%= button_tag button_name, id: 'btn-request-connect', class: 'btn btn-lg btn-special dark form-control', style: 'min-width:auto;max-width:25%;' %>
-          <% end %>
-        </div>
+          <div class='form-group form-group-lg'>
+            <div class='col-lg-10 col-md-offset-2'>
+              <%
+              button_name = 'Connect'
+              instructions = "Click the <i>#{button_name}</i> button below to request to connect to this user." 
+              %>
+              <span class='instructions'><%= instructions.html_safe %></span>
+            </div>
+          </div>
+
+          <div class='form-group form-group-lg'>
+            <%= content_tag :div, class: 'col-lg-10 col-md-offset-2' do %>  
+              <%= link_to 'Cancel', root_path, class: 'btn btn-lg btn-default btn-cancel form-control', style: 'min-width:auto;max-width:25%;' %>
+              <%= button_tag button_name, id: 'btn-request-connect', class: 'btn btn-lg btn-special dark form-control', style: 'min-width:auto;max-width:25%;' %>
+            <% end %>
+          </div>
 
         <% end %>
       </div>
