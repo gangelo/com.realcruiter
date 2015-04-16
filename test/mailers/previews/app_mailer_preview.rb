@@ -15,7 +15,7 @@ class AppMailerPreview < ActionMailer::Preview
   end
 
   def request_to_connect
-    user = User.first
+    user = User.last
     user_profile = user.user_profiles.first
   	AppMailer.request_to_connect(user, user_profile, "faketoken")
   end
