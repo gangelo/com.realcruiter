@@ -4,11 +4,15 @@ class ConnectionsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    interactor = RequestToConnectCreator.new(create_params)
-    if interactor.execute
-      redirect_to dashboards_path, notice: 'Your request to connect has been sent!'
+    if current_user.connect_request_already_exists?(create_params[:user_id], create_params[:user_profile_id])
+      redirect_to :back, alert: "You've already sent a request to this user"
     else
-      redirect_to :back, alert: 'There was a problem sending your request'
+      interactor = RequestToConnectCreator.new(current_user, create_params)
+      if interactor.execute
+        redirect_to dashboards_path, notice: 'Your request to connect has been sent!'
+      else
+        redirect_to :back, alert: 'There was a problem sending your request'
+      end
     end
   end
 

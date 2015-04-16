@@ -1,7 +1,8 @@
 class RequestToConnectCreator
   attr_reader :profile
 
-  def initialize(params)
+  def initialize(user, params)
+    @user = user
     @user_id = params[:user_id]
     @user_profile_id = params[:user_profile_id]
   end
@@ -15,8 +16,9 @@ class RequestToConnectCreator
   def create
     create_request do |user, user_profile, uuid|
       send_request(user, user_profile, uuid)
-      true
+      return true
     end
+    false
   rescue
     false
   end
@@ -26,12 +28,14 @@ class RequestToConnectCreator
     user_profile = UserProfile.find_by_id(@user_profile_id)
     uuid = unique_uuid
 
-    record_request
-
-    yield user, user_profile, uuid
+    if persist_request
+      yield user, user_profile, uuid
+    end
   end
 
-  def record_request
+  def persist_request
+    connect_request = @user.connect_requests.build(request_user_id: @user_id, request_user_profile_id: @user_profile_id)
+    connect_request.save
   end
 
   def send_request(user, user_profile, uuid)
