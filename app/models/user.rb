@@ -16,4 +16,8 @@ class User < ActiveRecord::Base
   def connect_request_already_exists?(user_id, user_profile_id)
     ConnectRequest.exists?(user_id: self.id, request_user_id: user_id, request_user_profile_id: user_profile_id)
   end
+
+  def connect_request_exists?(request_token)
+    ConnectRequest.exists?(request_token: request_token)
+  end
 end
