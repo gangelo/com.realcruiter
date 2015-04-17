@@ -7,6 +7,6 @@ label = local_assigns.fetch(:label, '?')
 
 <%= content_tag html_tag, class: css_class do %>
   <%= content_tag :i, nil, class: "fa #{fa_icon} fa-lg pull-left" do %>
-    &nbsp;Anonymous&nbsp;<a tabindex='0' role="button" class='anonymous-popover' style='font-size:initial;' data-toggle='popover' data-trigger='focus' title='Information Unavailable' data-content='This information is only available to connected user.'><%= content_tag :i, nil, class: 'fa fa-question-circle', style: 'font-size:100%;color:#3399ff;' %></a>
+    &nbsp;<%= label %>&nbsp;<a tabindex='0' role="button" class='anonymous-popover' style='font-size:initial;' data-toggle='popover' data-trigger='focus' title='Information Unavailable' data-content='This information is only available to connected user.'><%= content_tag :i, nil, class: 'fa fa-question-circle', style: 'font-size:100%;color:#3399ff;' %></a>
   <% end %>
 <% end %>
