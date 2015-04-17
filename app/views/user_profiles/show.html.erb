@@ -1,4 +1,5 @@
 <% content_for :head do %>
+  <%= javascript_include_tag 'popover' %>
   <%= javascript_include_tag 'modal-dialog-center' %>
   <%= javascript_include_tag 'user_profiles_show.js' %>
 <% end %>
@@ -20,11 +21,7 @@
 
           <div class='form-group'>
             <label class='col-lg-2 control-label'>Name</label>
-            <p class='form-control-static col-lg-10'>
-              <%= content_tag :i, nil, class: 'fa fa-user fa-lg pull-left' do %>
-                &nbsp;Anonymous
-              <% end %>
-            </p>
+            <%= render partial: 'shared/anonymous_personal_info', locals: {html_tag: :p, label: 'Anonymous', fa_icon: 'fa-user', css_class: 'form-control-static col-lg-10'} %>
           </div>
 
           <div class='form-group'>
@@ -43,20 +40,12 @@
 
           <div class='form-group'>
             <label class='col-lg-2 control-label'>Contact Info</label>
-            <p class='form-control-static col-lg-10'>
-              <%= content_tag :i, nil, class: 'fa fa-envelope fa-lg pull-left' do %>
-                &nbsp;Unavailable
-              <% end %>
-            </p>
+            <%= render partial: 'shared/anonymous_personal_info', locals: {html_tag: :p, label: 'Unavailable', fa_icon: 'fa-envelope', css_class: 'form-control-static col-lg-10'} %>
           </div>
 
           <div class='form-group'>
             <label class='col-lg-2 control-label'>&nbsp;</label>
-            <p class='form-control-static col-lg-10'>
-              <%= content_tag :i, nil, class: 'fa fa-phone-square fa-lg pull-left' do %>
-                &nbsp;Unavailable
-              <% end %>
-            </p>
+            <%= render partial: 'shared/anonymous_personal_info', locals: {html_tag: :p, label: 'Unavailable', fa_icon: 'fa-phone-square', css_class: 'form-control-static col-lg-10'} %>
           </div>
 
           <div class='form-group form-group-lg'>

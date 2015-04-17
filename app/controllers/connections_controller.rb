@@ -17,7 +17,14 @@ class ConnectionsController < ApplicationController
   end
 
   def request_show
-    uuid = request_show_params[:uuid]
+    if @request_token = request_show_params[:request_token]
+        if @user_profile = ConnectRequest.find_by_request_token(@request_token).user_profile
+          return
+        end
+    end
+
+    @user_profile = nil
+    flash[:alert] = 'The request could not be found'
   end
 
   def request_accept
@@ -33,6 +40,6 @@ class ConnectionsController < ApplicationController
   end
 
   def request_show_params
-    params.permit(:token)
+    params.permit(:request_token)
   end
 end

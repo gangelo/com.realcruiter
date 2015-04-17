@@ -25,12 +25,13 @@ Rails.application.config.assets.precompile += %w(
 )
 
 #
-# Miscellaneous assrts
+# Miscellaneous assets
 Rails.application.config.assets.precompile += %w( 
   close-button.js
   create-profile.js 
   delete-profile.js 
   modal-dialog-center.js
+  popover.js
   sign-up.js 
   skill-helpers.js 
   skill-search.js 
