@@ -28,7 +28,7 @@ class UserProfile < ActiveRecord::Base
 
   validates_presence_of :type, on: :create
 
-  def self.find_by_skills(skills)
+  def self.find_by_skills(skills, user=nil)
     return Skill.none unless skills.presence
 
     in_clause = build_sql_in_clause(:skills, :name, skills)
@@ -36,10 +36,15 @@ class UserProfile < ActiveRecord::Base
       .group('user_profiles.id')
       .having("COUNT(user_profiles.id) >= ? AND COUNT(user_profiles.id) <= ?", from_count(skills.count), skills.count)
       .order("COUNT(user_profiles.id) DESC, user_profiles.id")
+      .reject{ |p|
+        # Filter out user profiles that the current user is connected with, or, has
+        # outstanding connect requests against.
+        (p.user_id == user.id || user.connect_requests.where(request_user_id: p.user_id).any?) if user.presence && true
+      }
   end
 
-  def self.find_by_skills_with_paginate(skills, paginate_params={page: nil, per_page: nil})
-    find_by_skills(skills).paginate(page: paginate_params[:page], per_page: paginate_params[:per_page])
+  def self.find_by_skills_with_paginate(skills, paginate_params={page: nil, per_page: nil}, user=nil)
+    find_by_skills(skills, user).paginate(page: paginate_params[:page], per_page: paginate_params[:per_page])
   end
 
   private

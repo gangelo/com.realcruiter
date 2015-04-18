@@ -24,10 +24,11 @@ class SearchCriteria
 
   validates_presence_of :search_string, unless: :has_search_skills?
 
-  def initialize(attributes={})
+  def initialize(attributes={}, user=nil)
+    @user = user
     @search_skills = []
     @user_profiles = UserProfile.none
-    super
+    super attributes
 
     self.class.default_per_page = 15
 
@@ -86,7 +87,7 @@ class SearchCriteria
   protected
 
   def action_after_initialize
-    @user_profiles = has_search_skills? ? UserProfile.find_by_skills_with_paginate(valid_search_skills, paginate_params) : @user_profiles.paginate(paginate_params)
+    @user_profiles = has_search_skills? ? UserProfile.find_by_skills_with_paginate(valid_search_skills, paginate_params, @user) : @user_profiles.paginate(paginate_params)
   end
 
   private

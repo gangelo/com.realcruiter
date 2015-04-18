@@ -7,7 +7,7 @@ class SearchController < ApplicationController
 
   def search
     paginate_params = {page: params[:page].presence || 1, per_page: params[:per_page]}
-    @search_criteria = SearchCriteria.new(search_params.merge(paginate_params))
+    @search_criteria = SearchCriteria.new(search_params.merge(paginate_params), current_user)
     @search_criteria.valid?
     render :index
   end
