@@ -6,7 +6,20 @@ desc 'Create test users'
     if Skill.count == 0
       puts 'There are no skills in the skills table; run [rake seed:skills]'
     else
-      User.create(email: 'me@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
+      me = User.create(email: 'me@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
+      user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: me)
+      attach_skills(me, user_profile)
+
+      connect_request = User.create(email: 'connect_request@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
+      user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: connect_request)
+      attach_skills(connect_request, user_profile)
+
+      inverse_connect_request = User.create(email: 'inverse_connect_request@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
+      user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: inverse_connect_request)
+      attach_skills(inverse_connect_request, user_profile)
+
+      RequestToConnectCreator.new(me, {user_id: connect_request.id, user_profile_id: connect_request.user_profiles.first.id}).execute
+      RequestToConnectCreator.new(inverse_connect_request, {user_id: me.id, user_profile_id: me.user_profiles.first.id}).execute
     end
   end
 
@@ -30,6 +43,18 @@ desc 'Create test users'
         user.user_profiles << user_profile
       end
     end
+  end
+
+  def attach_skills(user, user_profile)
+    get_random_skills do |skill|
+      user_profile.skills << skill
+    end
+
+    get_random_custom_skills do |skill|
+      user_profile.custom_skills << skill
+    end
+
+    user.user_profiles << user_profile
   end
 
   def get_proile_name
