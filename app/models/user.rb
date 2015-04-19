@@ -6,9 +6,8 @@ class User < ActiveRecord::Base
 
   has_many :user_profiles, inverse_of: :user
 
-  has_many :connect_requests
-  has_many :requests, through: :connect_requests
-  has_many :inverse_connect_requests, class_name: 'ConnectRequest', foreign_key: :request_user_id
+  has_many :connect_requests, dependent: :delete_all
+  has_many :inverse_connect_requests, class_name: 'ConnectRequest', foreign_key: :request_user_id, dependent: :delete_all
   has_many :inverse_requests, through: :inverse_connect_requests, source: :user
 
   validates_presence_of :password_confirmation
