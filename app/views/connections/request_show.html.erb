@@ -1,8 +1,9 @@
-  <% if !@user_profile.nil? %>
+  <% if @connect_request.present? %>
 
     <% content_for :head do %>
       <%= javascript_include_tag 'popover' %>
       <%= javascript_include_tag 'modal-dialog-center' %>
+      <%= javascript_include_tag 'connections_accept_reject.js' %>
     <% end %>
 
     <div class='container'>
@@ -15,11 +16,20 @@
 
     <div class='row'>
       <div class='col-lg-12'>
-          <%= form_tag connections_create_path, method: :post, class: 'form-horizontal input-lg' do %>
+          <%= form_tag connections_request_path, method: :post, class: 'form-horizontal input-lg' do %>
 
-            <%= hidden_field_tag :user_id, @user_profile.user_id  %>
-            <%= hidden_field_tag :user_profile_id, @user_profile.id  %>
-            <%= hidden_field_tag :request_token, @request_token  %>
+            <%= hidden_field_tag :user_id, @connect_request.user_profile.user_id %>
+            <%= hidden_field_tag :user_profile_id, @connect_request.request_user_profile_id %>
+            <%= hidden_field_tag :request_token, @connect_request.request_token %>
+            <%= hidden_field_tag :request_action %>
+
+            <div class='form-group'>
+              <label class='col-lg-2 control-label'>Instructions</label>
+              <div class='col-lg-10 form-control-static instructions'>
+                <p>This user wants to connect with you. Connecting with other users enable you to exchange contact information; this enables you to maintain an ongoing professional relationship. Remember: connections are only beneficial to the degree your skills are compatible. Connecting with users whose skills are <i>incompatible</i> limits your connection to a social (non-professional) relationship.</p> 
+                <p>To accept this request click the <i>Accept</i> button. To reject this request click the <i>Reject</i> button.</p>
+              </div>
+            </div>
 
             <div class='form-group'>
               <label class='col-lg-2 control-label'>Name</label>
@@ -29,14 +39,14 @@
             <div class='form-group'>
               <label class='col-lg-2 control-label'>Profile Type</label>
               <p class='form-control-static col-lg-10'>
-                <%= render partial: 'shared/profile_type_label', locals: { profile_type: @user_profile.type} %>
+                <%= render partial: 'shared/profile_type_label', locals: { profile_type: @connect_request.user_profile.type} %>
               </p>
             </div>
 
             <div class='form-group'>
               <label class='col-lg-2 control-label'>Skills</label>
               <p class='form-control-static col-lg-10'>
-                <%= render partial: 'shared/skill', collection: @user_profile.all_skills, as: :skill %>
+                <%= render partial: 'shared/skill', collection: @connect_request.user_profile.all_skills, as: :skill %>
               </p>
             </div>
 
@@ -55,19 +65,9 @@
             </div>
 
             <div class='form-group form-group-lg'>
-              <div class='col-lg-10 col-md-offset-2'>
-                <%
-                button_name = 'Accept'
-                instructions = "Click the <i>#{button_name}</i> button below to connect with this user." 
-                %>
-                <span class='instructions'><%= instructions.html_safe %></span>
-              </div>
-            </div>
-
-            <div class='form-group form-group-lg'>
               <%= content_tag :div, class: 'col-lg-10 col-md-offset-2' do %>  
-                <%= link_to 'Reject', root_path, class: 'btn btn-lg btn-default btn-cancel form-control', style: 'min-width:auto;max-width:25%;' %>
-                <%= button_tag button_name, id: 'btn-request-connect', class: 'btn btn-lg btn-special dark form-control', style: 'min-width:auto;max-width:25%;' %>
+                <%= button_tag 'Reject', id: 'btn-reject', class: 'btn btn-lg btn-default btn-cancel form-control', style: 'min-width:auto;max-width:25%;' %>
+                <%= button_tag 'Accept', id: 'btn-accept', class: 'btn btn-lg btn-special dark form-control', style: 'min-width:auto;max-width:25%;' %>
               <% end %>
             </div>
 

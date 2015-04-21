@@ -1,10 +1,10 @@
 require 'request_to_connect_creator'
 
 class ConnectionsController < ApplicationController
-  before_action :authenticate_user!, except: [:request_show, :request_accept, :request_reject]
+  before_action :authenticate_user!, except: [:request_show, :request_connect]
 
   def create
-    if current_user.connect_request_already_exists?(create_params[:user_id], create_params[:user_profile_id])
+    if current_user.connect_request_exists?(create_params[:user_id], create_params[:user_profile_id])
       redirect_to :back, alert: "You've already sent a request to this user"
     else
       interactor = RequestToConnectCreator.new(current_user, create_params)
@@ -17,23 +17,45 @@ class ConnectionsController < ApplicationController
   end
 
   def request_show
-    if @request_token = request_show_params[:request_token]
-        if @user_profile = ConnectRequest.find_by_request_token(@request_token).user_profile
-          return
-        end
+    connect_request = load_request(request_show_params)
+    if !connect_request.present? || connect_request.not_open?
+      flash[:alert] = 'The request is invalid' 
+    else
+      @connect_request = connect_request
     end
-
-    @user_profile = nil
-    flash[:alert] = 'The request could not be found'
   end
 
-  def request_accept
-  end
+  def request_connect
+    connect_request = load_request(request_connect_params)
+    if connect_request.presence
+      if accept_request?
+        connect_request.accept!
+        flash[:notice] = 'Request accepted successfully!'
+      else
+        connect_request.reject!
+        flash[:notice] = 'Request rejected successfully'
+      end
 
-  def request_reject
+      if connect_request.save
+        redirect_to root_path and return
+      else
+        flash[:alert] = 'Unable to save request'
+        @connect_request = connect_request
+        render :request_show
+      end
+    else
+    end
   end
 
   private
+
+  def load_request(params)
+    ConnectRequest.find_by_request_token(params[:request_token])
+  end
+
+  def accept_request?
+    (request_connect_params[:request_action].presence || 'reject') == 'accept'
+  end
 
   def create_params
     params.permit(:user_id, :user_profile_id)
@@ -41,5 +63,9 @@ class ConnectionsController < ApplicationController
 
   def request_show_params
     params.permit(:request_token)
+  end
+
+  def request_connect_params
+    params.permit(:user_id, :user_profile_id, :request_token, :request_action)
   end
 end

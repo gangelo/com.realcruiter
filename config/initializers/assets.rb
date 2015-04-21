@@ -28,6 +28,7 @@ Rails.application.config.assets.precompile += %w(
 # Miscellaneous assets
 Rails.application.config.assets.precompile += %w( 
   close-button.js
+  connections_accept_reject.js
   create-profile.js 
   delete-profile.js 
   modal-dialog-center.js

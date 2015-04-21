@@ -1,3 +1,5 @@
+require 'request_status'
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -12,11 +14,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :password_confirmation
 
-  def connect_request_already_exists?(user_id, user_profile_id)
-    ConnectRequest.exists?(user_id: self.id, request_user_id: user_id, request_user_profile_id: user_profile_id)
-  end
-
-  def connect_request_exists?(request_token)
-    ConnectRequest.exists?(request_token: request_token)
+  def connect_request_exists?(request_user_id, request_user_profile_id)
+    ConnectRequest.exists?(user_id: self.id, request_user_id: request_user_id, request_user_profile_id: request_user_profile_id)
   end
 end

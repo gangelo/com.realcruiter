@@ -3,8 +3,7 @@ Rails.application.routes.draw do
   # Connections
   post  'connections/create'
   get   'connections/request', to: 'connections#request_show' 
-  get   'connections/accept', to: 'connections#request_accept'
-  post  'connections/reject', to: 'connections#request_reject'
+  post   'connections/request', to: 'connections#request_connect' 
 
   # 
   # User Profile
