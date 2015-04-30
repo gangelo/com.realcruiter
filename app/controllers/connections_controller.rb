@@ -29,25 +29,23 @@ class ConnectionsController < ApplicationController
     request = load_request(request_connect_params)
 
     unless request.present?
-      flash[:alert] = 'The request is invalid'
-      render :request_show and return
+      flash.now[:alert] = 'The request is invalid or could not be found'
+      return render :request_show
     end
 
     if accept_request?
       request.accept!
       flash[:notice] = 'Request accepted successfully!'
+      return redirect_to root_path if request.save
     else
       request.reject!
       flash[:notice] = 'Request rejected successfully'
+      return redirect_to root_path if request.save
     end
 
-    if request.save
-      redirect_to root_path and return
-    else
-      flash[:alert] = 'Unable to save request'
-      @connect_request = request
-      render :request_show
-    end
+    flash.now[:alert] = 'Unable to save request'
+    @connect_request = request
+    render :request_show
   end
 
   private
