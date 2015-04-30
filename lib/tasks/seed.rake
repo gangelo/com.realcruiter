@@ -1,4 +1,5 @@
 require 'ffaker'
+require 'pry'
 
 namespace :seed do
 desc 'Create test users'
@@ -27,7 +28,12 @@ desc 'Create test users'
       connect_user = User.create(email: 'connected_user@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
       user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: connect_user)
       attach_skills(connect_user, user_profile)
-      Connection.create(user_id: me.id, connected_user_id: connect_user.id, connected_user_profile_id: user_profile.id)
+
+      interactor = RequestToConnectCreator.new(me, {user_id: connect_user.id, user_profile_id: connect_user.user_profiles.first.id})
+      interactor.execute do |connect_request|
+        connect_request.accept!
+        connect_request.save
+      end
     end
   end
 
@@ -104,6 +110,30 @@ desc 'Create test users'
     end
 
     skills
+  end
+
+  desc 'Seed skills table with a paltry amount of skills for testing'
+  task test_skills: :environment do
+    # Seed our test skills.
+    Skill.create({ name: 'java' })
+    Skill.create({ name: 'javascript' })
+    Skill.create({ name: 'c#' })
+    Skill.create({ name: 'php' })
+    Skill.create({ name: 'android' })
+    Skill.create({ name: 'jquery' })
+    Skill.create({ name: 'python' })
+    Skill.create({ name: 'html' })
+    Skill.create({ name: 'c++' })
+    Skill.create({ name: 'ios' })
+    Skill.create({ name: 'mysql' })
+    Skill.create({ name: 'css' })
+    Skill.create({ name: 'sql' })
+    Skill.create({ name: 'asp.net' })
+    Skill.create({ name: 'objective-c' })
+    Skill.create({ name: '.net' })
+    Skill.create({ name: 'iphone' })
+    Skill.create({ name: 'ruby' })
+    Skill.create({ name: 'ruby-on-rails' })
   end
 
   desc 'Seed skills table'

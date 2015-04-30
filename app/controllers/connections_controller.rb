@@ -17,33 +17,36 @@ class ConnectionsController < ApplicationController
   end
 
   def request_show
-    connect_request = load_request(request_show_params)
-    if !connect_request.present? || connect_request.not_open?
-      flash[:alert] = 'The request is invalid' 
+    request = load_request(request_show_params)
+    if request.present? && request.open?
+      @connect_request = request
     else
-      @connect_request = connect_request
+      flash[:alert] = 'The request is invalid' 
     end
   end
 
   def request_connect
-    connect_request = load_request(request_connect_params)
-    if connect_request.presence
-      if accept_request?
-        connect_request.accept!
-        flash[:notice] = 'Request accepted successfully!'
-      else
-        connect_request.reject!
-        flash[:notice] = 'Request rejected successfully'
-      end
+    request = load_request(request_connect_params)
 
-      if connect_request.save
-        redirect_to root_path and return
-      else
-        flash[:alert] = 'Unable to save request'
-        @connect_request = connect_request
-        render :request_show
-      end
+    unless request.present?
+      flash[:alert] = 'The request is invalid'
+      render :request_show and return
+    end
+
+    if accept_request?
+      request.accept!
+      flash[:notice] = 'Request accepted successfully!'
     else
+      request.reject!
+      flash[:notice] = 'Request rejected successfully'
+    end
+
+    if request.save
+      redirect_to root_path and return
+    else
+      flash[:alert] = 'Unable to save request'
+      @connect_request = request
+      render :request_show
     end
   end
 

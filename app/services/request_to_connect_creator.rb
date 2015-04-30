@@ -6,10 +6,16 @@ class RequestToConnectCreator
     @user_id = params[:user_id]
     @user_profile_id = params[:user_profile_id]
     @request_token = nil
+    @connect_request = ConnectRequest.none
   end
 
-  def execute
-    create
+  def execute(&block)
+    if create
+      yield @connect_request if block_given?
+      return true
+    else
+      return false
+    end
   end
 
   private
@@ -35,8 +41,8 @@ class RequestToConnectCreator
   end
 
   def persist_request
-    connect_request = @user.connect_requests.build(request_user_id: @user_id, request_user_profile_id: @user_profile_id, request_token: @request_token)
-    connect_request.save
+    @connect_request = @user.connect_requests.build(request_user_id: @user_id, request_user_profile_id: @user_profile_id, request_token: @request_token)
+    @connect_request.save
   end
 
   def send_request(user, user_profile, request_token)
