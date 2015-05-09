@@ -1,6 +1,3 @@
-require 'ffaker'
-require 'pry'
-
 namespace :seed do
 
 desc 'Create a small test data bed'
@@ -165,7 +162,7 @@ end
 desc 'Seed skills table'
   task skills: :environment do
     gem 'ffaker'
-    
+
     # Seed our pre-defined skills.
     Skill.create({ name: 'java' })
     Skill.create({ name: 'javascript' })
