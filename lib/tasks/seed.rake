@@ -5,6 +5,8 @@ namespace :seed do
 
 desc 'Create a small test data bed'
   task test_data_small: :environment do
+    gem 'ffaker'
+
     puts 'Creating skills...'
     test_data_skills_small
 
@@ -16,6 +18,8 @@ desc 'Create a small test data bed'
 
 desc 'Create a large test data bed'
   task test_data_large: :environment do
+    gem 'ffaker'
+
     puts 'Creating skills...'
     Rake::Task['seed:skills'].execute
 
@@ -160,6 +164,8 @@ end
 
 desc 'Seed skills table'
   task skills: :environment do
+    gem 'ffaker'
+    
     # Seed our pre-defined skills.
     Skill.create({ name: 'java' })
     Skill.create({ name: 'javascript' })
