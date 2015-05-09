@@ -49,8 +49,6 @@ group :development, :test do
   gem 'shoulda-matchers'
   # https://github.com/jnicklas/capybara  
   gem 'capybara'
-  # For factory girl help.
-  gem 'ffaker', '~> 1.25.0'
 end
 
 group :development do
@@ -65,4 +63,8 @@ end
 
 # Used to set up our rails app configuration on heroku using ENV.
 gem 'figaro', '~> 1.1.0'
+
+# TODO: Move this to development/test group after testing.
+# For factory girl help.
+gem 'ffaker', '~> 1.25.0'
 
