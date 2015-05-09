@@ -1,0 +1,33 @@
+<p>Greetings <%= @resource.email %>,</p>
+
+<p>Congratulations!</p>
+
+<p>Your request to connect has been accepted!</p>
+
+<p><%= link_to 'Click here to visit Realcruiter.com', root_url %></p>
+
+<br />
+<strong>Having trouble?</strong>
+<p>If for any reason the above link does not work, simply copy &amp; paste the below link into your browser's address bar:</p>
+
+<p><%= root_url %></p>
+
+<%
+=begin
+%>
+
+<p>Your request to connect has been accepted!</p>
+
+<p>You may visit this user's contact information by clicking the below link:</p>
+
+<p><%= link_to 'Click here to view contact information', connections_request_accepted_url(request_token: @token) %></p>
+
+<br />
+<strong>Having trouble?</strong>
+<p>If for any reason the above link does not work, simply copy &amp; paste the below link into your browser's address bar:</p>
+
+<p><%= connections_request_accepted_url(request_token: @token) %></p>
+
+<%
+=end
+%>

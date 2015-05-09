@@ -2,141 +2,163 @@ require 'ffaker'
 require 'pry'
 
 namespace :seed do
-desc 'Create test users'
-  task me: :environment do
-    if Skill.count == 0
-      puts 'There are no skills in the skills table; run [rake seed:skills]'
-    else
-      # One for me...
-      me = User.create(email: 'me@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
-      user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: me)
-      attach_skills(me, user_profile)
 
-      # Set up a few connect requests...
-      connect_request = User.create(email: 'connect_request@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
-      user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: connect_request)
-      attach_skills(connect_request, user_profile)
+desc 'Create a small test data bed'
+  task test_data_small: :environment do
+    puts 'Creating skills...'
+    test_data_skills_small
 
-      inverse_connect_request = User.create(email: 'inverse_connect_request@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
-      user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: inverse_connect_request)
-      attach_skills(inverse_connect_request, user_profile)
+    puts 'Creating users...'
+    test_data_users_small
 
-      RequestToConnectCreator.new(me, {user_id: connect_request.id, user_profile_id: connect_request.user_profiles.first.id}).execute
-      RequestToConnectCreator.new(inverse_connect_request, {user_id: me.id, user_profile_id: me.user_profiles.first.id}).execute
+    puts 'Done.'
+  end
 
-      # Set up a connection...
-      connect_user = User.create(email: 'connected_user@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
-      user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: connect_user)
-      attach_skills(connect_user, user_profile)
+desc 'Create a large test data bed'
+  task test_data_large: :environment do
+    puts 'Creating skills...'
+    Rake::Task['seed:skills'].execute
 
-      interactor = RequestToConnectCreator.new(me, {user_id: connect_user.id, user_profile_id: connect_user.user_profiles.first.id})
-      interactor.execute do |connect_request|
-        connect_request.accept!
-        connect_request.save
+    puts 'Creating users...'
+    test_data_users_small
+    test_data_users_large
+
+    puts 'Done.'
+  end
+
+def test_data_users_small
+  if Skill.count == 0
+    puts 'There are no skills in the skills table; run [rake seed:skills]'
+  else
+    # One for me...
+    me = User.create(email: 'me@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
+    user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: me)
+    attach_skills(me, user_profile)
+
+    # Set up a few connect requests...
+    connect_request = User.create(email: 'connect_request@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
+    user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: connect_request)
+    attach_skills(connect_request, user_profile)
+
+    inverse_connect_request = User.create(email: 'inverse_connect_request@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
+    user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: inverse_connect_request)
+    attach_skills(inverse_connect_request, user_profile)
+
+    RequestToConnectCreator.new(me, {user_id: connect_request.id, user_profile_id: connect_request.user_profiles.first.id}).execute
+    RequestToConnectCreator.new(inverse_connect_request, {user_id: me.id, user_profile_id: me.user_profiles.first.id}).execute
+
+    # Set up a connection...
+    connect_user = User.create(email: 'connected_user@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
+    user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: connect_user)
+    attach_skills(connect_user, user_profile)
+
+    interactor = RequestToConnectCreator.new(me, {user_id: connect_user.id, user_profile_id: connect_user.user_profiles.first.id})
+    interactor.execute do |connect_request|
+      ConnectionCreator.new(connect_request, true).execute
+    end
+  end
+end
+
+def test_data_users_large
+  if Skill.count == 0
+    puts 'There are no skills in the skills table; run [rake seed:skills]'
+  else
+    500.times do
+      user = User.create(email: Faker::Internet.email, password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
+      user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: user)
+      
+      get_random_skills do |skill|
+        user_profile.skills << skill
       end
-    end
-  end
 
-  desc 'Create test users'
-  task users: :environment do
-    if Skill.count == 0
-      puts 'There are no skills in the skills table; run [rake seed:skills]'
-    else
-      500.times do
-        user = User.create(email: Faker::Internet.email, password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
-        user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: user)
-        
-        get_random_skills do |skill|
-          user_profile.skills << skill
-        end
-
-        get_random_custom_skills do |skill|
-          user_profile.custom_skills << skill
-        end
-
-        user.user_profiles << user_profile
+      get_random_custom_skills do |skill|
+        user_profile.custom_skills << skill
       end
+
+      user.user_profiles << user_profile
     end
   end
+end
 
-  def attach_skills(user, user_profile)
-    get_random_skills do |skill|
-      user_profile.skills << skill
-    end
-
-    get_random_custom_skills do |skill|
-      user_profile.custom_skills << skill
-    end
-
-    user.user_profiles << user_profile
+def attach_skills(user, user_profile)
+  get_random_skills do |skill|
+    user_profile.skills << skill
   end
 
-  def get_proile_name
-    "#{Faker::Lorem.word} Profile".titleize
+  get_random_custom_skills do |skill|
+    user_profile.custom_skills << skill
   end
 
-  def get_profile_type
-    rand(2) == 0 ? 'TechnicalRecruiterProfile' : 'SoftwareDeveloperProfile'
-  end
+  user.user_profiles << user_profile
+end
 
-  def get_random_skills(&block)
-    skills = []
+def get_proile_name
+  "#{Faker::Lorem.word} Profile".titleize
+end
 
-    if rand(2) == 1
-      skill = Skill.where(name: 'Ruby')
+def get_profile_type
+  rand(2) == 0 ? 'TechnicalRecruiterProfile' : 'SoftwareDeveloperProfile'
+end
+
+def get_random_skills(&block)
+  skills = []
+
+  #if rand(2) == 1
+    skill = Skill.where(name: 'Ruby')
+    yield skill if block_given?
+    skills << skill
+  #end
+
+  skill_count = Skill.count
+  rand(25).times do
+    skill = Skill.find(rand(1..skill_count))
+    unless skills.include? skill
       yield skill if block_given?
       skills << skill
     end
-
-    skill_count = Skill.count
-    rand(25).times do
-      skill = Skill.find(rand(1..skill_count))
-      next if skills.include? skill
-      yield skill if block_given?
-      skills << skill
-    end
-
-    skills
   end
 
-  def get_random_custom_skills(&block)
-    skills = []
+  skills
+end
 
-    rand(12).times do
-      skill = Faker::Lorem.word.titleize
-      next if skills.include? skill
+def get_random_custom_skills(&block)
+  skills = []
+
+  rand(12).times do
+    skill = Faker::Lorem.word.titleize
+    unless skills.include? skill
       yield CustomSkill.new(name: skill)
       skills << skill
     end
-
-    skills
   end
 
-  desc 'Seed skills table with a paltry amount of skills for testing'
-  task test_skills: :environment do
-    # Seed our test skills.
-    Skill.create({ name: 'java' })
-    Skill.create({ name: 'javascript' })
-    Skill.create({ name: 'c#' })
-    Skill.create({ name: 'php' })
-    Skill.create({ name: 'android' })
-    Skill.create({ name: 'jquery' })
-    Skill.create({ name: 'python' })
-    Skill.create({ name: 'html' })
-    Skill.create({ name: 'c++' })
-    Skill.create({ name: 'ios' })
-    Skill.create({ name: 'mysql' })
-    Skill.create({ name: 'css' })
-    Skill.create({ name: 'sql' })
-    Skill.create({ name: 'asp.net' })
-    Skill.create({ name: 'objective-c' })
-    Skill.create({ name: '.net' })
-    Skill.create({ name: 'iphone' })
-    Skill.create({ name: 'ruby' })
-    Skill.create({ name: 'ruby-on-rails' })
-  end
+  skills
+end
 
-  desc 'Seed skills table'
+def test_data_skills_small
+  # Seed our test skills.
+  Skill.create({ name: 'java' })
+  Skill.create({ name: 'javascript' })
+  Skill.create({ name: 'c#' })
+  Skill.create({ name: 'php' })
+  Skill.create({ name: 'android' })
+  Skill.create({ name: 'jquery' })
+  Skill.create({ name: 'python' })
+  Skill.create({ name: 'html' })
+  Skill.create({ name: 'c++' })
+  Skill.create({ name: 'ios' })
+  Skill.create({ name: 'mysql' })
+  Skill.create({ name: 'css' })
+  Skill.create({ name: 'sql' })
+  Skill.create({ name: 'asp.net' })
+  Skill.create({ name: 'objective-c' })
+  Skill.create({ name: '.net' })
+  Skill.create({ name: 'iphone' })
+  Skill.create({ name: 'ruby' })
+  Skill.create({ name: 'ruby-on-rails' })
+end
+
+desc 'Seed skills table'
   task skills: :environment do
     # Seed our pre-defined skills.
     Skill.create({ name: 'java' })

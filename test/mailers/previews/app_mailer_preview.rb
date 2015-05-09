@@ -15,8 +15,17 @@ class AppMailerPreview < ActionMailer::Preview
   end
 
   def request_to_connect
-    user = User.last
-    user_profile = user.user_profiles.first
-  	AppMailer.request_to_connect(user, user_profile, "faketoken")
+    connect_request = ConnectRequest.first
+  	AppMailer.request_to_connect(connect_request, "faketoken")
+  end
+
+  def request_to_connect_accepted
+    connect_request = ConnectRequest.first
+    AppMailer.request_to_connect_accepted(connect_request, "faketoken")
+  end
+
+   def request_to_connect_rejected
+    connect_request = ConnectRequest.first
+    AppMailer.request_to_connect_rejected(connect_request)
   end
 end

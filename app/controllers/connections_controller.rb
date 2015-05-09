@@ -1,3 +1,4 @@
+require 'crypted_request_to_connect_token_creator'
 require 'request_to_connect_creator'
 
 class ConnectionsController < ApplicationController
@@ -19,39 +20,40 @@ class ConnectionsController < ApplicationController
   def request_show
     request = load_request(request_show_params)
     if request.present? && request.open?
+      @request_token = request_show_params[:request_token]
       @connect_request = request
     else
-      flash[:alert] = 'The request is invalid' 
+      flash[:alert].now = 'The request is invalid' 
     end
   end
 
   def request_connect
     request = load_request(request_connect_params)
-
     unless request.present?
       flash.now[:alert] = 'The request is invalid or could not be found'
       return render :request_show
     end
 
-    if accept_request?
-      request.accept!
-      flash[:notice] = 'Request accepted successfully!'
-      return redirect_to root_path if request.save
+    interactor = ConnectionCreator.new(request, accept_request?)
+    if interactor.execute
+      flash[:notice] = "Request #{if interactor.accepted? then 'accepted' else 'rejected' end} successfully"
+      redirect_to root_path
     else
-      request.reject!
-      flash[:notice] = 'Request rejected successfully'
-      return redirect_to root_path if request.save
+      flash.now[:alert] = 'Unable to save request'
+      @connect_request = request
+      render :request_show
     end
-
-    flash.now[:alert] = 'Unable to save request'
-    @connect_request = request
-    render :request_show
   end
 
   private
 
   def load_request(params)
-    ConnectRequest.find_by_request_token(params[:request_token])
+    interactor = CryptedRequestToConnectTokenCreator.new(params[:request_token], :decrypt)
+    id = interactor.execute.to_i
+    ConnectRequest.find(id)
+  rescue
+    # TODO: log
+    ConnectRequest.none
   end
 
   def accept_request?

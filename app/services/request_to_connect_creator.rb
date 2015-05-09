@@ -1,3 +1,5 @@
+require 'crypted_request_to_connect_token_creator'
+
 class RequestToConnectCreator
   attr_reader :profile
 
@@ -5,54 +7,32 @@ class RequestToConnectCreator
     @user = user
     @user_id = params[:user_id]
     @user_profile_id = params[:user_profile_id]
-    @request_token = nil
     @connect_request = ConnectRequest.none
   end
 
   def execute(&block)
     if create
       yield @connect_request if block_given?
-      return true
+      send_email
+      true
     else
-      return false
+      false
     end
   end
 
   private
 
   def create
-    create_request do |user, user_profile, request_token|
-      send_request(user, user_profile, request_token)
-      return true
-    end
-    false
-  rescue
-    false
-  end
-
-  def create_request
-    user = User.find_by_id(@user_id)
-    user_profile = UserProfile.find_by_id(@user_profile_id)
-    @request_token = url_safe_request_token
-
-    if persist_request
-      yield user, user_profile, @request_token
-    end
-  end
-
-  def persist_request
-    @connect_request = @user.connect_requests.build(request_user_id: @user_id, request_user_profile_id: @user_profile_id, request_token: @request_token)
+    @connect_request = @user.connect_requests.build(request_user_id: @user_id, request_user_profile_id: @user_profile_id)
     @connect_request.save
-  end
-
-  def send_request(user, user_profile, request_token)
-    AppMailer.request_to_connect(user, user_profile, request_token).deliver_now
   rescue
+    false
   end
 
-  def url_safe_request_token
-    request_token = SecureRandom.urlsafe_base64(32, false)
-    return request_token unless ConnectRequest.exists?(request_token: request_token)
-    url_safe_request_token
+  def send_email
+    interactor = CryptedRequestToConnectTokenCreator.new(@connect_request.id)
+    token = interactor.execute
+    AppMailer.request_to_connect(@connect_request, token).deliver_now
+  rescue
   end
 end
