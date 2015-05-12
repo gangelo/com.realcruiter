@@ -32,9 +32,9 @@
           <%= f.errors_for :search_string %>
         <% end %>
       </div>
-      <div class='col-lg-4'>     
-        <%= render partial: 'search_button' %>
-        <%= button_tag 'Clear', class: 'btn btn-lg btn-default btn-cancel dark pull-right', style: 'width:48%;', onclick: 'return false;' %>
+     <div class='col-lg-4'>     
+      <%= render partial: 'search_button' %>
+      <%= button_tag 'Clear', class: 'btn btn-lg btn-default btn-cancel dark pull-right', style: 'width:48%;', onclick: "(function(){$('.skills-container').empty();})();return false;" %>
       </div>
     </div>
 
