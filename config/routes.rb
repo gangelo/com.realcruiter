@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   #
   # Search
   get '/search', to: 'search#index'
-  get '/search/search', to: 'search#search'
+  post '/search/search', to: 'search#search'
   get '/search/skills.json', to: 'search#skills', as: :search_skills
   get '/search/search_profile_skills', to: 'search#search_profile_skills', as: :search_profile_skills
 

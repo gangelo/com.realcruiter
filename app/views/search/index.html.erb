@@ -23,7 +23,7 @@
   <%= form_for @search_criteria, 
                       url: search_search_path,
                       builder: InlineErrorsBuilder,
-                      method: :GET,
+                      method: :POST,
                       role: :form do |f| %>
     <div class='row'>
       <div class='col-lg-8'>     
