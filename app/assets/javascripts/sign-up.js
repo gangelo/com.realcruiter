@@ -1,5 +1,5 @@
 $(function() {
-	if ($('#profile_type_technical_recruiter_profile').is(':checked')) {
+	if ($('#profile_type_TechnicalRecruiterProfile').is(':checked')) {
     $('#referral_code').show();
   } else {
     $('#referral_code').hide();

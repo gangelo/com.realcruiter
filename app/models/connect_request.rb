@@ -1,5 +1,3 @@
-require 'connection_creator'
-
 class ConnectRequest < ActiveRecord::Base
   WITHDRAWN = -99
   REJECTED = -90

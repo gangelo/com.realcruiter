@@ -6,6 +6,16 @@
                        :builder => InlineErrorsBuilder,
                        :method => :POST,
                        :role => :form do |f| %>
+  <%= content_tag :div, :class => f.validation_class(:first_name, "form-group form-group-lg") do %>
+    <%= f.text_field :first_name, placeholder: "First name", class: 'form-control', autocomplete: :off %>
+    <%= f.errors_for :first_name %>
+  <% end %>
+
+  <%= content_tag :div, :class => f.validation_class(:last_name, "form-group form-group-lg") do %>
+    <%= f.text_field :last_name, placeholder: "Last name", class: 'form-control', autocomplete: :off %>
+    <%= f.errors_for :last_name %>
+  <% end %>
+
   <%= content_tag :div, :class => f.validation_class(:email, "form-group form-group-lg") do %>
     <%= f.email_field :email, placeholder: "Email", class: 'form-control', autocomplete: :off %>
     <%= f.errors_for :email %>
@@ -17,18 +27,18 @@
   <% end %>
 
   <%= content_tag :div, :class => f.validation_class(:password, "form-group form-group-lg") do %>
-    <%= f.password_field :password_confirmation, :placeholder => "Re-enter password", :class => 'form-control', autocomplete: :off %>
+    <%= f.password_field :password_confirmation, placeholder: "Re-enter password", class: 'form-control', autocomplete: :off %>
     <%= f.errors_for :password_confirmation %>
   <% end %>
 
   <%= content_tag :div, class: f.validation_class(:profile_type, 'form-group form-group-lg') do %>
-    <%= label_tag SoftwareDeveloperProfile.name.underscore.to_sym, class: 'input-lg radio-inline' do %>
-      <%= radio_button_tag :profile_type, SoftwareDeveloperProfile.name.underscore, false %>
+    <%= label_tag SoftwareDeveloperProfile.name, class: 'input-lg radio-inline' do %>
+      <%= radio_button_tag :profile_type, SoftwareDeveloperProfile.name, false %>
       I'm a Software Developer
     <% end %>
 
-    <%= label_tag TechnicalRecruiterProfile.name.underscore.to_sym, class: 'input-lg radio-inline' do %>
-      <%= radio_button_tag :profile_type, TechnicalRecruiterProfile.name.underscore, true %>      
+    <%= label_tag TechnicalRecruiterProfile.name, class: 'input-lg radio-inline' do %>
+      <%= radio_button_tag :profile_type, TechnicalRecruiterProfile.name, true %>      
       I'm a Recruiter
     <% end %>
     <%= f.errors_for :profile_type %>

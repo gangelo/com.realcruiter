@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   has_many :connect_requests, dependent: :delete_all
   has_many :inverse_connect_requests, class_name: 'ConnectRequest', foreign_key: :request_user_id, dependent: :delete_all
 
-  validates_presence_of :password_confirmation
+  validates_presence_of :password_confirmation, :first_name, :last_name
 
   def connect_request_exists?(request_user_id, request_user_profile_id)
     ConnectRequest.exists?(user_id: self.id, request_user_id: request_user_id, request_user_profile_id: request_user_profile_id)

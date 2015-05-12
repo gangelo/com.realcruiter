@@ -11,6 +11,18 @@ class UserProfile < ActiveRecord::Base
 
   has_many :custom_skills, inverse_of: :user_profile, dependent: :delete_all
 
+  validates_uniqueness_of :profile_name, case_sensitive: false, scope: [:user_id, :type]
+  validates_presence_of :profile_name
+
+  validates_presence_of :type, on: :create, if: Proc.new { |p| 
+    if p.type == TechnicalRecruiterProfile.name || p.type == SoftwareDeveloperProfile.name 
+      true
+    else
+      errors.add(:type, "Can't be blank")
+      false
+    end
+  }
+
   def initialize(hash={})   
     super defaults_merge(hash)
   end
@@ -22,11 +34,6 @@ class UserProfile < ActiveRecord::Base
   def all_skills_attributes=(hash)
     add_all_skills(hash)
   end
-
-  validates_uniqueness_of :profile_name, case_sensitive: false, scope: [:user_id, :type]
-  validates_presence_of :profile_name
-
-  validates_presence_of :type, on: :create
 
   def self.find_by_skills(skills, user=nil)
     return Skill.none unless skills.presence
