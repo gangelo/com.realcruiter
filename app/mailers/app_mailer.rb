@@ -8,13 +8,15 @@ class AppMailer < Devise::Mailer
     send_mail(record, token, opts, :request_to_connect)
   end
 
-  def request_to_connect_accepted(record, token, opts={subject: 'your connect request has been accepted!'})
-    send_mail(record, token, opts, :request_to_connect_accepted)
+  def request_to_connect_accepted(connect_request, opts={subject: 'your connect request has been accepted!'})
+    @user_profile = connect_request.user_profile
+    opts[:subject] = AppMailer.build_email_subject(opts[:subject])
+    devise_mail(connect_request.user, :request_to_connect_accepted, opts)
   end
 
-  def request_to_connect_rejected(record, opts={subject: 'your connect request has been rejected.'})
+  def request_to_connect_rejected(connect_request, opts={subject: 'your connect request has been rejected.'})
     opts[:subject] = AppMailer.build_email_subject(opts[:subject])
-    devise_mail(record.user, :request_to_connect_rejected, opts)
+    devise_mail(connect_request.user, :request_to_connect_rejected, opts)
   end
 
   protected

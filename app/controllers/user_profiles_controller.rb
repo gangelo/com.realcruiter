@@ -23,7 +23,10 @@ class UserProfilesController < ApplicationController
   end
 
   def show
-    if !@user_profile = UserProfile.find_by_id(show_params)
+    if @user_profile = UserProfile.find_by_id(show_params)
+      @connected = current_user.connected?(@user_profile)
+    else
+      @connected = false
       flash[:alert] = 'Unable to find profile'
     end
   end

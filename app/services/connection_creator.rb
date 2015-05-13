@@ -39,9 +39,7 @@ class ConnectionCreator
 
   def send_email
     if self.accepted?
-      interactor = CryptedConnectionTokenCreator.new(@connection.id)
-      token = interactor.execute
-      AppMailer.request_to_connect_accepted(@connect_request, token).deliver_now
+      AppMailer.request_to_connect_accepted(@connect_request).deliver_now
     else
       AppMailer.request_to_connect_rejected(@connect_request).deliver_now
     end

@@ -1,39 +1,20 @@
-<p>Greetings <%= @resource.email %>,</p>
+<p>Greetings <%= @resource.first_name %>,</p>
 
 <p>Congratulations!</p>
 
-
-<p>Your request to connect has been accepted!</p>
-
-<p><%= link_to 'Click here to visit Realcruiter.com', root_url %></p>
-
-<br />
-<strong>Having trouble?</strong>
-<p>If for any reason the above link does not work, simply copy &amp; paste the below link into your browser's address bar:</p>
-
-<p><%= root_url %></p>
-
-
 <%
-=begin
-%>
-
-<%
-users_name = "#{@user_profile.user.first_name @user_profile.user.last_name}"
+users_name = @user_profile.user.formatted_name
 %>
 
 <p><%= users_name %> has accepted your request to connect!</p>
 
 <p>You may visit <%= "#{users_name}'s"%> contact information by clicking the below link:</p>
 
-<p><%= link_to 'Click here to view contact information', connections_request_accepted_url(request_token: @token) %></p>
+<p><%= link_to 'Click here to view contact information', profile_url(@user_profile) %></p>
 
 <br />
 <strong>Having trouble?</strong>
 <p>If for any reason the above link does not work, simply copy &amp; paste the below link into your browser's address bar:</p>
 
-<p><%= connections_request_accepted_url(request_token: @token) %></p>
+<p><%= profile_url(@user_profile) %></p>
 
-<%
-=end
-%>

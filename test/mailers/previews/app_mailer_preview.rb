@@ -21,7 +21,7 @@ class AppMailerPreview < ActionMailer::Preview
 
   def request_to_connect_accepted
     connect_request = ConnectRequest.first
-    AppMailer.request_to_connect_accepted(connect_request, "faketoken")
+    AppMailer.request_to_connect_accepted(connect_request)
   end
 
    def request_to_connect_rejected

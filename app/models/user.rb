@@ -17,4 +17,12 @@ class User < ActiveRecord::Base
   def connect_request_exists?(request_user_id, request_user_profile_id)
     ConnectRequest.exists?(user_id: self.id, request_user_id: request_user_id, request_user_profile_id: request_user_profile_id)
   end
+
+  def connected?(user_profile)
+    self.connections.where(status: Connection::ACTIVE, connected_user_id: user_profile.user_id, connected_user_profile_id: user_profile.id).any?
+  end
+
+  def formatted_name
+    "#{self.first_name} #{self.last_name}"
+  end
 end
