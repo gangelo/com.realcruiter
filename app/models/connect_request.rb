@@ -5,7 +5,7 @@ class ConnectRequest < ActiveRecord::Base
   ACCEPTED = 1
 
   belongs_to :user
-  belongs_to :user_profile, foreign_key: :request_user_profile_id
+  belongs_to :user_profile, foreign_key: :request_user_profile_id, inverse_of: :connect_request
   has_one :connection
 
   validates_presence_of :user_id, :request_user_id, :request_user_profile_id, :request_status

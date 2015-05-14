@@ -9,7 +9,7 @@ class UserProfile < ActiveRecord::Base
   has_many :user_profile_skills
   has_many :skills, through: :user_profile_skills
 
-  has_many :custom_skills, inverse_of: :user_profile, dependent: :delete_all
+  has_many :custom_skills, dependent: :delete_all
 
   validates_uniqueness_of :profile_name, case_sensitive: false, scope: [:user_id, :type]
   validates_presence_of :profile_name

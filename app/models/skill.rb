@@ -6,5 +6,5 @@ class Skill < ActiveRecord::Base
   include Skills::Validates
 
   has_many :user_profile_skills
-  has_many :user_profiles, through: :user_profile_skills
+  has_many :user_profiles, through: :user_profile_skills, inverse_of: :skills
 end

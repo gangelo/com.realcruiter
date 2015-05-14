@@ -4,13 +4,13 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  has_many :user_profiles, inverse_of: :user
+  has_many :user_profiles
 
   has_many :connections, dependent: :delete_all
-  has_many :inverse_connections, class_name: 'Connection', foreign_key: :connected_user_id, dependent: :delete_all
+  has_many :inverse_connections, class_name: 'Connection', foreign_key: :connected_user_id, dependent: :delete_all, inverse_of: :user
 
   has_many :connect_requests, dependent: :delete_all
-  has_many :inverse_connect_requests, class_name: 'ConnectRequest', foreign_key: :request_user_id, dependent: :delete_all
+  has_many :inverse_connect_requests, class_name: 'ConnectRequest', foreign_key: :request_user_id, dependent: :delete_all, inverse_of: :user
 
   validates_presence_of :password_confirmation, :first_name, :last_name
 
