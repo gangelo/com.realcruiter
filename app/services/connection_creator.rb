@@ -29,7 +29,7 @@ class ConnectionCreator
 
       request_user_id = @connect_request.request_user_id
       request_user_profile_id = @connect_request.request_user_profile_id
-      @connection = @connect_request.user.connections.build(connected_user_id: request_user_id, connected_user_profile_id: request_user_profile_id)
+      @connection = @connect_request.user.connections.build(connect_request: @connect_request, connected_user_id: request_user_id, connected_user_profile_id: request_user_profile_id)
       @connection.save!
       true
     end

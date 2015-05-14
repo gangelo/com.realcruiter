@@ -35,15 +35,15 @@ def test_data_users_small
     attach_skills(me, user_profile)
 
     # Set up a few connect requests...
-    connect_request = User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: 'connect_request@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
-    user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: connect_request)
-    attach_skills(connect_request, user_profile)
+    user1 = User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: 'user1@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
+    user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: user1)
+    attach_skills(user1, user_profile)
 
     user2 = User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: 'user2@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
     user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: user2)
     attach_skills(user2, user_profile)
 
-    RequestToConnectCreator.new(me, {user_id: connect_request.id, user_profile_id: connect_request.user_profiles.first.id}).execute
+    RequestToConnectCreator.new(me, {user_id: user1.id, user_profile_id: user1.user_profiles.first.id}).execute
     RequestToConnectCreator.new(user2, {user_id: me.id, user_profile_id: me.user_profiles.first.id}).execute
 
     # Set up a connection...

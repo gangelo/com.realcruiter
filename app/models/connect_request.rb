@@ -6,6 +6,7 @@ class ConnectRequest < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :user_profile, foreign_key: :request_user_profile_id
+  has_one :connection
 
   validates_presence_of :user_id, :request_user_id, :request_user_profile_id, :request_status
 

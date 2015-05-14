@@ -5,8 +5,9 @@ class Connection < ActiveRecord::Base
   before_create :activate!
   
   belongs_to :user
+  belongs_to :connect_request
 
-  validates_presence_of :user_id, :connected_user_id, :connected_user_profile_id, :status
+  validates_presence_of :user_id, :connected_user_id, :connected_user_profile_id, :status, :connect_request_id
 
   def activate!
     self.status = ACTIVE
