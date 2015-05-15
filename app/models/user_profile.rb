@@ -4,10 +4,10 @@ require 'model_helpers_sql_builders'
 class UserProfile < ActiveRecord::Base
   include ModelHelpers::SqlBuilders
 
-  belongs_to :user, inverse_of: :user_profiles
+  belongs_to :user
 
   has_many :user_profile_skills
-  has_many :skills, through: :user_profile_skills
+  has_many :skills, through: :user_profile_skills, inverse_of: :user_profile
 
   has_many :custom_skills, dependent: :delete_all
 
