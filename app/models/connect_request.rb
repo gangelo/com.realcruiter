@@ -2,10 +2,10 @@ class ConnectRequest < ActiveRecord::Base
   WITHDRAWN = -99
   REJECTED = -90
   OPEN = 0
-  ACCEPTED = 1
+  CONNECTED = 1
 
   belongs_to :user
-  belongs_to :user_profile, foreign_key: :request_user_profile_id, inverse_of: :connect_request
+  belongs_to :user_profile, foreign_key: :request_user_profile_id
   has_one :connection
 
   validates_presence_of :user_id, :request_user_id, :request_user_profile_id, :request_status
@@ -14,12 +14,12 @@ class ConnectRequest < ActiveRecord::Base
   	self.request_status == OPEN
   end
 
-  def accept!
-  	self.request_status = ACCEPTED
+  def connect!
+  	self.request_status = CONNECTED
   end
 
-  def accepted?
-  	self.request_status == ACCEPTED
+  def connected?
+  	self.request_status == CONNECTED
   end
 
   def reject!

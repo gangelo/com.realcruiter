@@ -29,31 +29,33 @@ def test_data_users_small
   if Skill.count == 0
     puts 'There are no skills in the skills table; run [rake seed:skills]'
   else
-    # One for me...
-    me = User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: 'me@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
-    user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: me)
-    attach_skills(me, user_profile)
+    ActiveRecord::Base.transaction do
+        # One for me...
+        me = User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: 'me@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
+        user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: me)
+        attach_skills(me, user_profile)
 
-    # Set up a few connect requests...
-    user1 = User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: 'user1@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
-    user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: user1)
-    attach_skills(user1, user_profile)
+        # Set up a few connect requests...
+        user1 = User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: 'user1@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
+        user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: user1)
+        attach_skills(user1, user_profile)
 
-    user2 = User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: 'user2@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
-    user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: user2)
-    attach_skills(user2, user_profile)
+        user2 = User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: 'user2@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
+        user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: user2)
+        attach_skills(user2, user_profile)
 
-    RequestToConnectCreator.new(me, {user_id: user1.id, user_profile_id: user1.user_profiles.first.id}).execute
-    RequestToConnectCreator.new(user2, {user_id: me.id, user_profile_id: me.user_profiles.first.id}).execute
+        RequestToConnectCreator.new(me, {user_id: user1.id, user_profile_id: user1.user_profiles.first.id}).execute
+        RequestToConnectCreator.new(user2, {user_id: me.id, user_profile_id: me.user_profiles.first.id}).execute
 
-    # Set up a connection...
-    user3 = User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: 'connected_user@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
-    user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: user3)
-    attach_skills(user3, user_profile)
+        # Set up a connection...
+        user3 = User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: 'connected_user@gmail.com', password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
+        user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: user3)
+        attach_skills(user3, user_profile)
 
-    interactor = RequestToConnectCreator.new(me, {user_id: user3.id, user_profile_id: user3.user_profiles.first.id})
-    interactor.execute do |connect_request|
-      ConnectionCreator.new(connect_request, true).execute
+        interactor = RequestToConnectCreator.new(me, {user_id: user3.id, user_profile_id: user3.user_profiles.first.id})
+        interactor.execute do |connect_request|
+          ConnectionCreator.new(connect_request, true).execute
+        end
     end
   end
 end
@@ -62,19 +64,21 @@ def test_data_users_large
   if Skill.count == 0
     puts 'There are no skills in the skills table; run [rake seed:skills]'
   else
-    500.times do
-      user = User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
-      user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: user)
-      
-      get_random_skills do |skill|
-        user_profile.skills << skill
-      end
+    ActiveRecord::Base.transaction do
+        500.times do
+          user = User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, password: 'password', password_confirmation: 'password', confirmed_at: Time.now)
+          user_profile = UserProfile.create(type: get_profile_type, profile_name: get_proile_name, user: user)
+          
+          get_random_skills do |skill|
+            user_profile.skills << skill
+          end
 
-      get_random_custom_skills do |skill|
-        user_profile.custom_skills << skill
-      end
+          get_random_custom_skills do |skill|
+            user_profile.custom_skills << skill
+          end
 
-      user.user_profiles << user_profile
+          user.user_profiles << user_profile
+        end
     end
   end
 end
@@ -135,32 +139,32 @@ def get_random_custom_skills(&block)
 end
 
 def test_data_skills_small
-  # Seed our test skills.
-  Skill.create({ name: 'java' })
-  Skill.create({ name: 'javascript' })
-  Skill.create({ name: 'c#' })
-  Skill.create({ name: 'php' })
-  Skill.create({ name: 'android' })
-  Skill.create({ name: 'jquery' })
-  Skill.create({ name: 'python' })
-  Skill.create({ name: 'html' })
-  Skill.create({ name: 'c++' })
-  Skill.create({ name: 'ios' })
-  Skill.create({ name: 'mysql' })
-  Skill.create({ name: 'css' })
-  Skill.create({ name: 'sql' })
-  Skill.create({ name: 'asp.net' })
-  Skill.create({ name: 'objective-c' })
-  Skill.create({ name: '.net' })
-  Skill.create({ name: 'iphone' })
-  Skill.create({ name: 'ruby' })
-  Skill.create({ name: 'ruby-on-rails' })
+  ActiveRecord::Base.transaction do
+    # Seed our test skills.
+    Skill.create({ name: 'java' })
+    Skill.create({ name: 'javascript' })
+    Skill.create({ name: 'c#' })
+    Skill.create({ name: 'php' })
+    Skill.create({ name: 'android' })
+    Skill.create({ name: 'jquery' })
+    Skill.create({ name: 'python' })
+    Skill.create({ name: 'html' })
+    Skill.create({ name: 'c++' })
+    Skill.create({ name: 'ios' })
+    Skill.create({ name: 'mysql' })
+    Skill.create({ name: 'css' })
+    Skill.create({ name: 'sql' })
+    Skill.create({ name: 'asp.net' })
+    Skill.create({ name: 'objective-c' })
+    Skill.create({ name: '.net' })
+    Skill.create({ name: 'iphone' })
+    Skill.create({ name: 'ruby' })
+    Skill.create({ name: 'ruby-on-rails' })
+  end
 end
 
 desc 'Seed skills table'
   task skills: :environment do
-    gem 'ffaker'
-
     # Seed our pre-defined skills.
     Skill.create({ name: 'java' })
     Skill.create({ name: 'javascript' })

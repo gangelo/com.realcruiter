@@ -36,7 +36,7 @@ class ConnectionsController < ApplicationController
 
     interactor = ConnectionCreator.new(request, accept_request?)
     if interactor.execute
-      flash[:notice] = "Request #{if interactor.accepted? then 'accepted' else 'rejected' end} successfully"
+      flash[:notice] = "Request #{if interactor.connected? then 'accepted' else 'rejected' end} successfully"
       redirect_to root_path
     else
       flash.now[:alert] = 'Unable to save request'

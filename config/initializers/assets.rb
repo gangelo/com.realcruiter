@@ -16,6 +16,7 @@ Rails.application.config.assets.precompile += %w(
   home.css home.js
   registrations.js registrations.css
   search.js search.css 
+  sessions.js sessions.css
   user_profiles.js user_profiles.css
   user_profiles_show.js
 )

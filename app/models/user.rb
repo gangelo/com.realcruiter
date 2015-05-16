@@ -6,9 +6,6 @@ class User < ActiveRecord::Base
 
   has_many :user_profiles
 
-  has_many :connections, dependent: :delete_all
-  has_many :inverse_connections, class_name: 'Connection', foreign_key: :connected_user_id, dependent: :delete_all, inverse_of: :user
-
   has_many :connect_requests, dependent: :delete_all
   has_many :inverse_connect_requests, class_name: 'ConnectRequest', foreign_key: :request_user_id, dependent: :delete_all, inverse_of: :user
 
@@ -19,7 +16,7 @@ class User < ActiveRecord::Base
   end
 
   def connected?(user_profile)
-    self.connections.where(status: Connection::ACTIVE, connected_user_id: user_profile.user_id, connected_user_profile_id: user_profile.id).any?
+    self.connect_requests.where(request_status: ConnectRequest::CONNECTED, request_user_id: user_profile.user_id, request_user_profile_id: user_profile.id).any?
   end
 
   def formatted_name
