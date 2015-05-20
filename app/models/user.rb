@@ -22,4 +22,26 @@ class User < ActiveRecord::Base
   def formatted_name
     "#{self.first_name} #{self.last_name}"
   end
+
+  def all_connect_requests
+    user_id = self.id
+    connect_requests = ConnectRequest.where(
+      ConnectRequest.arel_table[:user_id].eq(user_id).or(
+        ConnectRequest.arel_table[:request_user_id].eq(user_id) 
+      ) 
+    )
+
+    connect_requests.each do |connect_request|
+      connect_request.instance_eval do
+        def is_inverse
+          instance_variable_get('@is_inverse')
+        end    
+        def is_inverse=(value)
+          instance_variable_set('@is_inverse', value)
+        end    
+      end
+
+      connect_request.is_inverse = self.id == connect_request.request_user_id
+    end
+  end
 end
