@@ -1,0 +1,16 @@
+<table class='table table-striped input-lg'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Profile Type</th>
+      <th>Status</th>
+      <th>As Of</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <%= render partial: 'shared/dashboard/connections_grid_row', collection: connect_requests, as: :connect_request %>
+
+ <tbody>
+</table>

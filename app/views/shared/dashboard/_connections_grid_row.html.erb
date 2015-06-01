@@ -1,0 +1,15 @@
+
+<tr>
+  <%= render partial: 'shared/personal_info', locals: {html_tag: :td, label: 'Anonymous', fa_icon: 'fa-user', css_class: nil} %>
+
+  <td>
+    <%= render partial: 'shared/profile_type_label', locals: { profile_type: connect_request.user_profile.type} %>
+  </td>
+  <td>
+    <%= connect_request.request_status_textify %>
+  </td>
+  <td>
+    <%= "#{distance_of_time_in_words(connect_request.updated_at, Date.today)} ago".titleize %>
+  </td>
+  <td>[actions]</td>
+</tr>

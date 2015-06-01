@@ -38,4 +38,18 @@ class ConnectRequest < ActiveRecord::Base
   	self.request_status == WITHDRAWN
   end
 
+  def request_status_textify
+    if open?
+      'Open'
+    elsif connected?
+      'Connected'
+    elsif rejected?
+      'Rejected'
+    elsif withdrawn?
+      'Withdrawn'
+    else
+      'Unknown'
+    end
+  end
+
 end
