@@ -4,6 +4,7 @@ css_class = local_assigns.fetch(:css_class, 'form-control-static col-lg-10')
 fa_icon = local_assigns.fetch(:fa_icon, 'fa-lock')
 label = local_assigns.fetch(:label, '?')
 connected = local_assigns.fetch(:connected, false)
+popover = local_assigns.fetch(:popover, true)
 message = local_assigns.fetch(:message, nil)
 message ||= 'This information is only exchanged between connected users.'
 %>
@@ -11,7 +12,7 @@ message ||= 'This information is only exchanged between connected users.'
 <%= content_tag html_tag, class: css_class do %>
   <%= content_tag :i, nil, class: "fa #{fa_icon} fa-lg pull-left" do %>
     &nbsp;<%= label %>
-    <% if !connected %>
+    <% if popover && !connected %>
       &nbsp;
       <a tabindex='0' role="button" class='anonymous-popover' style='font-size:initial;' data-toggle='popover' data-trigger='focus' title='Information Unavailable' data-content='<%= message %>'><%= content_tag :i, nil, class: 'fa fa-question-circle', style: 'font-size:100%;color:#3399ff;' %>
       </a>

@@ -1,6 +1,31 @@
 
 <tr>
-  <%= render partial: 'shared/personal_info', locals: {html_tag: :td, label: 'Anonymous', fa_icon: 'fa-user', css_class: nil} %>
+  <% 
+  if connect_request.connected? 
+    connected = true
+    from_name = connect_request.is_inverse? ? connect_request.user_profile.user.formatted_name : 'You'
+    to_name = connect_request.is_inverse? ?  'You' : connect_request.user_profile.user.formatted_name
+  else 
+    connected = false
+    from_name = connect_request.is_inverse? ? 'Anonymous' : 'You'
+    to_name = connect_request.is_inverse? ?  'You' : 'Anonymous'
+  end 
+
+  from_popover = from_name.downcase != 'you'
+  to_popover = to_name.downcase != 'you'
+  %>
+
+  <%= render partial: 'shared/personal_info', locals: {html_tag: :td, label: from_name, connected: connected, popover: from_popover, fa_icon: 'fa-user', css_class: nil} %>
+
+  <td>
+    <% if connect_request.connected? %>
+      <i class='fa fa-lg fa-link'></i>
+    <% else %>
+      <i class='fa fa-lg fa-arrow-right'></i>
+    <% end %>
+  </td>
+
+  <%= render partial: 'shared/personal_info', locals: {html_tag: :td, label: to_name, connected: connected, popover: to_popover, fa_icon: '', css_class: nil} %>
 
   <td>
     <%= render partial: 'shared/profile_type_label', locals: { profile_type: connect_request.user_profile.type} %>

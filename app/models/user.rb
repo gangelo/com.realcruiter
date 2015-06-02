@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
 
     connect_requests.each do |connect_request|
       connect_request.instance_eval do
-        def is_inverse
+        def is_inverse?
           instance_variable_get('@is_inverse')
         end    
         def is_inverse=(value)
