@@ -31,8 +31,9 @@
 @golden-ratio: 1.618;
 @default-orange: #f90;
 @default-orange-dark: #b45f06;
-@edit-color: #090;
-@delete-color: #900;
+@edit-color: #5CB85C;
+@delete-color: #D9534F;
+@view-color: #428BCA;
 
 .border-radius(@radius){
     .border-top-radius(@radius);
@@ -108,6 +109,10 @@
 
 .btn-edit {
   color: @edit-color !important;
+}
+
+.btn-view, .btn-preview {
+  color: @view-color !important;
 }
 
 a.btn {

@@ -19,7 +19,7 @@
         <%= render partial: 'shared/profile_type_label', locals: { profile_type: profile.type} %>
       <% end %>
       <%= content_tag :td, style: 'width:25%;' do %>
-        <%= link_to profile_path(profile), { class: 'pull-left btn btn-edit transparent', title: 'View profile' } do %>
+        <%= link_to profile_path(profile), { class: 'pull-left btn btn-view transparent', title: 'View profile' } do %>
           <%= content_tag :i, nil, class: 'fa fa-eye fa-2x' %>
         <% end %>
       <% end %>
