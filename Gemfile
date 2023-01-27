@@ -31,7 +31,7 @@ gem 'less-rails' # Sprockets (what Rails 3.1 uses for its asset pipeline) suppor
 gem 'twitter-bootstrap-rails'
 
 # For authentication.
-gem 'devise', '~> 3.4.1'
+gem 'devise', '~> 4.7.1'
 
 gem 'will_paginate', '~> 3.0.7'
 gem 'bootstrap-will_paginate', '~> 0.0.10'
